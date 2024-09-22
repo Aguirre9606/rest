@@ -19,38 +19,60 @@
       background-color: white;
       padding: 10px;
       border-radius: 5px;
+      display: flex;
+      align-items: center;
     }
     #menu button {
       margin: 5px;
     }
+    #logo {
+      margin-right: 10px;
+    }
   </style>
 </head>
 <body>
+
   <div id="menu">
-    <button onclick="showDish('entrada')">Entradas</button>
-    <button onclick="showDish('plato_fondo')">Platos de Fondo</button>
-    <button onclick="showDish('bebidas')">Bebidas</button>
+    <img id="logo" src="https://example.com/logo.png" alt="Logo del Restaurante" width="50">
+    <button onclick="showCategory('entradas')">Entradas</button>
+    <button onclick="showCategory('platos_fondo')">Platos de Fondo</button>
+    <button onclick="showCategory('bebidas')">Bebidas</button>
   </div>
 
   <a-scene embedded arjs="sourceType: webcam;">
-    <!-- Modelo 3D para entradas -->
-    <a-box id="entrada" position="0 0.5 -3" scale="0.5 0.5 0.5" material="color: red; visible: false;"></a-box>
-    
-    <!-- Modelo 3D para platos de fondo -->
-    <a-sphere id="plato_fondo" position="0 0.5 -3" scale="0.5 0.5 0.5" material="color: blue; visible: false;"></a-sphere>
-    
-    <!-- Modelo 3D para bebidas -->
-    <a-cylinder id="bebidas" position="0 0.5 -3" scale="0.5 0.5 0.5" material="color: green; visible: false;"></a-cylinder>
+    <!-- Entradas 3D -->
+    <a-box id="entrada1" position="-1 0.5 -3" scale="0.3 0.3 0.3" material="color: red; visible: false;"></a-box>
+    <a-box id="entrada2" position="1 0.5 -3" scale="0.3 0.3 0.3" material="color: yellow; visible: false;"></a-box>
+
+    <!-- Platos de fondo 3D -->
+    <a-sphere id="plato_fondo1" position="-1 0.5 -3" scale="0.5 0.5 0.5" material="color: blue; visible: false;"></a-sphere>
+    <a-sphere id="plato_fondo2" position="1 0.5 -3" scale="0.5 0.5 0.5" material="color: green; visible: false;"></a-sphere>
+
+    <!-- Bebidas 3D -->
+    <a-cylinder id="bebida1" position="-1 0.5 -3" scale="0.3 0.5 0.3" material="color: orange; visible: false;"></a-cylinder>
+    <a-cylinder id="bebida2" position="1 0.5 -3" scale="0.3 0.5 0.3" material="color: purple; visible: false;"></a-cylinder>
 
     <a-entity camera></a-entity>
   </a-scene>
 
   <script>
-    function showDish(dishId) {
+    function showCategory(category) {
+      // Oculta todos los modelos 3D
       document.querySelectorAll('a-box, a-sphere, a-cylinder').forEach(function(el) {
         el.setAttribute('visible', 'false');
       });
-      document.getElementById(dishId).setAttribute('visible', 'true');
+
+      // Muestra los modelos de la categoría seleccionada
+      if (category === 'entradas') {
+        document.getElementById('entrada1').setAttribute('visible', 'true');
+        document.getElementById('entrada2').setAttribute('visible', 'true');
+      } else if (category === 'platos_fondo') {
+        document.getElementById('plato_fondo1').setAttribute('visible', 'true');
+        document.getElementById('plato_fondo2').setAttribute('visible', 'true');
+      } else if (category === 'bebidas') {
+        document.getElementById('bebida1').setAttribute('visible', 'true');
+        document.getElementById('bebida2').setAttribute('visible', 'true');
+      }
     }
   </script>
 </body>
