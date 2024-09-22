@@ -2,15 +2,14 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-  <title>Carta de Restaurante AR</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carta de Restaurante AR sin marcador</title>
   <!-- Incluyendo A-Frame y AR.js -->
   <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
-
-  <!-- Estilo para ajustar la cámara y evitar el zoom excesivo -->
+  
   <style>
-    body, html, a-scene {
+    body, html {
       margin: 0;
       padding: 0;
       overflow: hidden;
@@ -18,16 +17,12 @@
   </style>
 </head>
 <body>
-  <!-- Escena A-Frame con AR.js -->
-  <a-scene embedded arjs="sourceType: webcam; sourceWidth: 640; sourceHeight: 480; displayWidth: 640; displayHeight: 480; debugUIEnabled: false; detectionMode: mono; matrixCodeType: 3x3; maxDetectionRate: 60;">
-    
-    <!-- Marcador Hiro -->
-    <a-marker preset="hiro">
-      <!-- Objeto 3D que aparece sobre el marcador -->
-      <a-sphere position="0 0.5 0" radius="0.1" color="#EF2D5E"></a-sphere>
-    </a-marker>
+  <!-- Escena A-Frame con AR.js sin marcador -->
+  <a-scene embedded arjs>
+    <!-- Objeto 3D flotante que aparece sin necesidad de marcador -->
+    <a-box position="0 1 -3" rotation="0 45 45" color="#4CC3D9"></a-box>
 
-    <!-- Cámara para realidad aumentada con ajustes de estabilidad -->
+    <!-- Cámara de realidad aumentada -->
     <a-entity camera></a-entity>
   </a-scene>
 </body>
