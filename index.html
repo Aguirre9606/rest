@@ -14,16 +14,18 @@
       margin: 0;
       padding: 0;
       overflow: hidden;
+      width: 100vw;
+      height: 100vh;
     }
   </style>
 </head>
 <body>
   <!-- Escena A-Frame con AR.js -->
-  <a-scene embedded arjs="sourceType: webcam; sourceWidth: 1280; sourceHeight: 720; displayWidth: 1280; displayHeight: 720; detectionMode: mono_and_matrix; maxDetectionRate: 30;">
+  <a-scene embedded arjs="sourceType: webcam; sourceWidth: 1280; sourceHeight: 720; displayWidth: 1280; displayHeight: 720;">
     <!-- Marcador Hiro -->
     <a-marker preset="hiro">
       <!-- Objeto 3D que aparece sobre el marcador -->
-      <a-box position="0 0.5 0" scale="0.2 0.2 0.2" material="color: red;"></a-box>
+      <a-box position="0 0.5 0" rotation="0 45 0" scale="0.2 0.2 0.2" material="color: red;"></a-box>
     </a-marker>
 
     <!-- Cámara para realidad aumentada con ajustes de estabilidad -->
@@ -31,4 +33,3 @@
   </a-scene>
 </body>
 </html>
-
