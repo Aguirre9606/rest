@@ -8,26 +8,25 @@
   <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
 
-  <!-- Estilo para ajustar la cámara y evitar el zoom excesivo -->
+  <!-- Estilo para ajustar el "zoom" -->
   <style>
     body, html, a-scene {
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
+      transform: scale(0.9); /* Ajustar el zoom para mejorar la visualización */
+      transform-origin: center center;
     }
   </style>
 </head>
-<body>
-  <!-- Escena A-Frame con AR.js -->
+<body style="margin: 0; overflow: hidden;">
+  <!-- Escena A-Frame con AR.js y parámetros ajustados -->
   <a-scene embedded arjs="sourceType: webcam; cameraParameters: {facingMode: 'environment'}; sourceWidth: 640; sourceHeight: 480; detectionMode: mono_and_matrix; maxDetectionRate: 30;">
     <!-- Marcador Hiro -->
     <a-marker preset="hiro">
-      <!-- Objeto 3D que aparece sobre el marcador -->
-      <a-box position="0 0.5 0" scale="0.2 0.2 0.2" material="color: red;"></a-box>
+      <!-- Objeto 3D que aparece sobre el marcador con ajuste de tamaño y posición -->
+      <a-box position="0 0.5 0" scale="0.3 0.3 0.3" material="color: red;"></a-box>
     </a-marker>
 
-    <!-- Cámara para realidad aumentada con ajustes de estabilidad -->
-    <a-entity camera look-controls="enabled: false;"></a-entity>
+    <!-- Cámara para realidad aumentada -->
+    <a-entity camera></a-entity>
   </a-scene>
 </body>
 </html>
