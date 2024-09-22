@@ -24,8 +24,10 @@
   <a-scene embedded arjs="sourceType: webcam; detectionMode: mono;">
     <!-- Marcador Hiro -->
     <a-marker preset="hiro">
-      <!-- Cambiamos el objeto 3D a un torus -->
-      <a-torus position="0 0.5 0" radius="0.5" radius-tubular="0.05" material="color: green;"></a-torus>
+      <!-- Cambiamos a un modelo 3D cargado externamente -->
+      <a-entity gltf-model="url(https://cdn.jsdelivr.net/gh/aframevr/assets@master/examples/boilerplate/models/monster/monster.gltf)"
+                scale="0.5 0.5 0.5" position="0 0.5 0">
+      </a-entity>
     </a-marker>
 
     <!-- Cámara para realidad aumentada con ajustes de estabilidad -->
@@ -33,4 +35,3 @@
   </a-scene>
 </body>
 </html>
-
