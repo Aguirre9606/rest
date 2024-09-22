@@ -1,13 +1,19 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
   <title>Carta de Restaurante AR</title>
+  <!-- Incluyendo A-Frame y AR.js -->
   <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
+
+  <!-- Enlace a archivo JavaScript para manejar interactividad -->
+  <script src="main.js"></script>
+
+  <!-- Estilo para ajustar la cámara y evitar el zoom excesivo -->
   <style>
-    body, html {
+    body, html, a-scene {
       margin: 0;
       padding: 0;
       overflow: hidden;
@@ -16,64 +22,34 @@
       position: absolute;
       top: 10px;
       left: 10px;
-      background-color: white;
-      padding: 10px;
-      border-radius: 5px;
-      display: flex;
-      align-items: center;
+      z-index: 5;
     }
-    #menu button {
+    button {
       margin: 5px;
+      padding: 10px;
+      font-size: 16px;
+      cursor: pointer;
     }
     #logo {
-      margin-right: 10px;
+      width: 50px;
+      height: auto;
+      display: inline;
     }
   </style>
 </head>
 <body>
-
+  <!-- Menú de categorías con el logo -->
   <div id="menu">
-    <img id="logo" src="logo.png" alt="Logo del Restaurante" width="50">
-    <button onclick="showCategory('entradas')">Entradas</button>
-    <button onclick="showCategory('platos_fondo')">Platos de Fondo</button>
-    <button onclick="showCategory('bebidas')">Bebidas</button>
+    <img id="logo" src="logo.png" alt="Logo del Restaurante">
+    <button onclick="showEntradas()">Entradas</button>
+    <button onclick="showPlatos()">Platos de Fondo</button>
+    <button onclick="showBebidas()">Bebidas</button>
   </div>
 
-  <a-scene embedded arjs="sourceType: webcam;">
-    <!-- Entradas 3D -->
-    <a-box id="entrada1" position="-1 0.5 -3" scale="0.3 0.3 0.3" material="color: red; visible: false;"></a-box>
-    <a-box id="entrada2" position="1 0.5 -3" scale="0.3 0.3 0.3" material="color: yellow; visible: false;"></a-box>
-
-    <!-- Platos de fondo 3D -->
-    <a-sphere id="plato_fondo1" position="-1 0.5 -3" scale="0.5 0.5 0.5" material="color: blue; visible: false;"></a-sphere>
-    <a-sphere id="plato_fondo2" position="1 0.5 -3" scale="0.5 0.5 0.5" material="color: green; visible: false;"></a-sphere>
-
-    <!-- Bebidas 3D -->
-    <a-cylinder id="bebida1" position="-1 0.5 -3" scale="0.3 0.5 0.3" material="color: orange; visible: false;"></a-cylinder>
-    <a-cylinder id="bebida2" position="1 0.5 -3" scale="0.3 0.5 0.3" material="color: purple; visible: false;"></a-cylinder>
-
+  <!-- Escena A-Frame con AR.js -->
+  <a-scene embedded arjs="sourceType: webcam; sourceWidth: 1280; sourceHeight: 720; displayWidth: 1280; displayHeight: 720;">
+    <a-entity id="foodObject" position="0 0.5 -2"></a-entity>
     <a-entity camera></a-entity>
   </a-scene>
-
-  <script>
-    function showCategory(category) {
-      // Oculta todos los modelos 3D
-      document.querySelectorAll('a-box, a-sphere, a-cylinder').forEach(function(el) {
-        el.setAttribute('visible', 'false');
-      });
-
-      // Muestra los modelos de la categoría seleccionada
-      if (category === 'entradas') {
-        document.getElementById('entrada1').setAttribute('visible', 'true');
-        document.getElementById('entrada2').setAttribute('visible', 'true');
-      } else if (category === 'platos_fondo') {
-        document.getElementById('plato_fondo1').setAttribute('visible', 'true');
-        document.getElementById('plato_fondo2').setAttribute('visible', 'true');
-      } else if (category === 'bebidas') {
-        document.getElementById('bebida1').setAttribute('visible', 'true');
-        document.getElementById('bebida2').setAttribute('visible', 'true');
-      }
-    }
-  </script>
 </body>
 </html>
