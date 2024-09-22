@@ -19,7 +19,7 @@
 </head>
 <body>
   <!-- Escena A-Frame con AR.js -->
-  <a-scene embedded arjs="sourceType: webcam; cameraParameters: {facingMode: 'environment'}; sourceWidth: 640; sourceHeight: 480; detectionMode: mono_and_matrix; maxDetectionRate: 30;">
+  <a-scene embedded arjs="sourceType: webcam; sourceWidth: 1280; sourceHeight: 720; displayWidth: 1280; displayHeight: 720; cameraParameters: {facingMode: 'environment'}; detectionMode: mono_and_matrix; maxDetectionRate: 30;">
     <!-- Marcador Hiro -->
     <a-marker preset="hiro">
       <!-- Objeto 3D que aparece sobre el marcador -->
@@ -27,7 +27,7 @@
     </a-marker>
 
     <!-- Cámara para realidad aumentada con ajustes de estabilidad -->
-    <a-entity camera look-controls="enabled: false;"></a-entity>
+    <a-entity camera></a-entity>
   </a-scene>
 </body>
 </html>
