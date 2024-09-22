@@ -14,20 +14,17 @@
       margin: 0;
       padding: 0;
       overflow: hidden;
-      width: 100vw;
-      height: 100vh;
     }
   </style>
 </head>
 <body>
   <!-- Escena A-Frame con AR.js -->
-  <a-scene embedded arjs="sourceType: webcam; detectionMode: mono;">
+  <a-scene embedded arjs="sourceType: webcam; sourceWidth: 1280; sourceHeight: 720; displayWidth: 1280; displayHeight: 720; debugUIEnabled: false;">
+    
     <!-- Marcador Hiro -->
     <a-marker preset="hiro">
-      <!-- Cambiamos a un modelo 3D cargado externamente -->
-      <a-entity gltf-model="url(https://cdn.jsdelivr.net/gh/aframevr/assets@master/examples/boilerplate/models/monster/monster.gltf)"
-                scale="0.5 0.5 0.5" position="0 0.5 0">
-      </a-entity>
+      <!-- Objeto 3D que aparece sobre el marcador -->
+      <a-sphere position="0 0.5 0" radius="0.1" color="#EF2D5E"></a-sphere>
     </a-marker>
 
     <!-- Cámara para realidad aumentada con ajustes de estabilidad -->
