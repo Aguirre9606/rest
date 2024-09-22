@@ -11,7 +11,7 @@
   <!-- Estilo para ajustar el "zoom" -->
   <style>
     body, html, a-scene {
-      transform: scale(0.7); /* Reduce un poco más el tamaño */
+      transform: scale(0.9); /* Ajustar el zoom para mejorar la visualización */
       transform-origin: center center;
     }
   </style>
@@ -21,8 +21,8 @@
   <a-scene embedded arjs="sourceType: webcam; cameraParameters: {facingMode: 'environment'}; sourceWidth: 640; sourceHeight: 480; detectionMode: mono_and_matrix; maxDetectionRate: 30;">
     <!-- Marcador Hiro -->
     <a-marker preset="hiro">
-      <!-- Objeto 3D que aparece sobre el marcador, ajustado más lejos -->
-      <a-box position="0 0.5 -1" material="color: red;"></a-box>
+      <!-- Objeto 3D que aparece sobre el marcador con ajuste de tamaño y posición -->
+      <a-box position="0 0.5 0" scale="0.3 0.3 0.3" material="color: red;"></a-box>
     </a-marker>
 
     <!-- Cámara para realidad aumentada -->
@@ -30,6 +30,3 @@
   </a-scene>
 </body>
 </html>
-
-
-
