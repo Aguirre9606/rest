@@ -14,11 +14,12 @@
       margin: 0;
       padding: 0;
       overflow: hidden;
+      font-family: Arial, sans-serif;
     }
 
     .menu {
       position: fixed;
-      top: 50px; /* Ajustamos la posición para que no interfiera con el logo */
+      top: 60px;
       left: 10px;
       display: flex;
       gap: 10px;
@@ -42,9 +43,9 @@
     .logo {
       position: fixed;
       top: 10px;
-      right: 10px;
-      z-index: 100;
-      background-color: white; /* Evitamos la superposición de la escena */
+      left: 10px;
+      z-index: 200; /* Aumentamos el z-index para asegurarnos que se mantenga visible */
+      background-color: white;
       padding: 5px;
     }
 
