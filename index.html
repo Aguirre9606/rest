@@ -1,28 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebAR Restaurante</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-    <script src="main.js" defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+  <title>Carta de Restaurante AR</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <img src="logo.png" id="logo" alt="Restaurante Logo">
-        <div id="menu-buttons">
-            <button id="entradas">Entradas</button>
-            <button id="platosFondo">Platos de Fondo</button>
-            <button id="bebidas">Bebidas</button>
-        </div>
-    </header>
+  <!-- Logo -->
+  <img id="logo" src="logo.png" alt="Logo Restaurante">
 
-    <a-scene embedded arjs>
-        <a-marker preset="hiro">
-            <a-entity id="model-container"></a-entity>
-        </a-marker>
-        <a-entity camera></a-entity>
-    </a-scene>
+  <!-- Contenedor de los botones -->
+  <div id="buttons-container">
+    <button id="entradas-btn">Entradas</button>
+    <button id="platos-btn">Platos de Fondo</button>
+    <button id="bebidas-btn">Bebidas</button>
+  </div>
+
+  <!-- Aquí va el resto de tu código AR.js y A-Frame -->
+
+  <script src="main.js"></script>
 </body>
 </html>
