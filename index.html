@@ -1,65 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-  <title>Carta de Restaurante AR</title>
-  <!-- Incluyendo A-Frame y AR.js -->
-  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
-
-  <!-- Estilos -->
-  <link rel="stylesheet" href="style.css">
-
-  <!-- Estilo para ajustar la cámara y evitar el zoom excesivo -->
-  <style>
-    body, html, a-scene {
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-    }
-    #logo {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      width: 100px;
-    }
-    #menu {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      display: flex;
-      gap: 10px;
-    }
-    #menu button {
-      padding: 10px;
-      background-color: #444;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-    #menu button:hover {
-      background-color: #666;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebAR Restaurante</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="main.js" defer></script>
 </head>
 <body>
-  <!-- Logo del restaurante -->
-  <img id="logo" src="./logo.png" alt="Logo del restaurante">
+    <header>
+        <img src="logo.png" id="logo" alt="Restaurante Logo">
+        <div id="menu-buttons">
+            <button id="entradas">Entradas</button>
+            <button id="platosFondo">Platos de Fondo</button>
+            <button id="bebidas">Bebidas</button>
+        </div>
+    </header>
 
-  <!-- Menú con botones -->
-  <div id="menu">
-    <button id="boton-entradas">Entradas</button>
-    <button id="boton-platos">Platos de Fondo</button>
-    <button id="boton-bebidas">Bebidas</button>
-  </div>
-
-  <!-- Escena A-Frame con AR.js -->
-  <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
-    <a-entity id="bebidas-container"></a-entity>
-  </a-scene>
-
-  <!-- Enlace al archivo de JavaScript -->
-  <script src="./main.js"></script>
+    <a-scene embedded arjs>
+        <!-- Entorno AR -->
+        <a-marker preset="hiro">
+            <a-box id="box" position="0 0.5 0" material="color: red;"></a-box>
+        </a-marker>
+        <a-entity camera></a-entity>
+    </a-scene>
 </body>
 </html>
