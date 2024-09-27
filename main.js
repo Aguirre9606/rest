@@ -1,48 +1,42 @@
-function showCategory(category) {
-    const entity = document.getElementById('objeto3d');
-    entity.innerHTML = ''; // Limpiar el contenido previo
+// Lista de modelos 3D para las bebidas
+const bebidas = [
+    { name: 'Pepsi', modelPath: './models/Pepsi_Can.glb', position: '0 0 0' },
+    { name: 'Barrel', modelPath: './models/BARREL_KEG.glb', position: '1 0 0' }
+  ];
   
-    if (category === 'entradas') {
-      // Aquí podrías agregar algún modelo para las entradas si tienes uno.
-      console.log("Entradas seleccionadas");
-    } else if (category === 'platos') {
-      // Aquí podrías agregar algún modelo para los platos si tienes uno.
-      console.log("Platos seleccionados");
-    } else if (category === 'bebidas') {
-      // Mostrar las dos bebidas en 3D
-      console.log("Bebidas seleccionadas");
+  // Función para mostrar el modelo 3D
+  function mostrarModelo(model) {
+    const container = document.getElementById('modelContainer');
+    const entity = document.createElement('a-entity');
+    entity.setAttribute('gltf-model', model.modelPath);
+    entity.setAttribute('scale', '0.5 0.5 0.5'); // Ajuste de escala para que el modelo sea visible
+    entity.setAttribute('position', model.position);
+    entity.setAttribute('rotation', '0 45 0'); // Rotación del modelo para que esté orientado correctamente
+    container.appendChild(entity);
+  }
   
-      // Agregar modelo 1: Pepsi_Can
-      const pepsiCan = document.createElement('a-entity');
-      pepsiCan.setAttribute('gltf-model', 'models/Pepsi_Can.glb');
-      pepsiCan.setAttribute('position', '-0.5 1 -3');
-      pepsiCan.setAttribute('scale', '0.5 0.5 0.5');
-      pepsiCan.setAttribute('rotation', '0 0 0');
-      pepsiCan.setAttribute('animation', 'property: rotation; to: 0 360 0; loop: true; dur: 5000');
-  
-      // Agregar modelo 2: BARREL_KEG
-      const barrelKeg = document.createElement('a-entity');
-      barrelKeg.setAttribute('gltf-model', 'models/BARREL_KEG.glb');
-      barrelKeg.setAttribute('position', '0.5 1 -3');
-      barrelKeg.setAttribute('scale', '0.5 0.5 0.5');
-      barrelKeg.setAttribute('rotation', '0 0 0');
-      barrelKeg.setAttribute('animation', 'property: rotation; to: 0 360 0; loop: true; dur: 5000');
-  
-      // Añadir los modelos al objeto 3D
-      entity.appendChild(pepsiCan);
-      entity.appendChild(barrelKeg);
+  // Limpiar modelos anteriores
+  function limpiarModelos() {
+    const container = document.getElementById('modelContainer');
+    while (container.firstChild) {
+      container.removeChild(container.firstChild);
     }
   }
   
-  document.getElementById('entradas-btn').addEventListener('click', function() {
-    showCategory('entradas');
+  // Escuchar clic en el botón "Bebidas" y mostrar los modelos 3D
+  document.getElementById('bebidas').addEventListener('click', function() {
+    limpiarModelos();
+    bebidas.forEach(mostrarModelo);
   });
   
-  document.getElementById('platos-btn').addEventListener('click', function() {
-    showCategory('platos');
+  // Escuchar clic en "Entradas" o "Platos de Fondo"
+  document.getElementById('entradas').addEventListener('click', function() {
+    limpiarModelos();
+    // Aquí puedes agregar modelos para "Entradas" si es necesario.
   });
   
-  document.getElementById('bebidas-btn').addEventListener('click', function() {
-    showCategory('bebidas');
+  document.getElementById('platosFondo').addEventListener('click', function() {
+    limpiarModelos();
+    // Aquí puedes agregar modelos para "Platos de Fondo" si es necesario.
   });
   
