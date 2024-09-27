@@ -4,24 +4,27 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Carta de Restaurante AR</title>
-  <!-- Incluyendo A-Frame y AR.js -->
+  <!-- Incluyendo A-Frame -->
   <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
 
+  <!-- Estilo para ajustar la cámara y evitar el zoom excesivo -->
   <style>
-    body, html {
+    body, html, a-scene {
       margin: 0;
       padding: 0;
       overflow: hidden;
+      font-family: Arial, sans-serif;
     }
+
     .menu {
       position: fixed;
-      top: 20px;
+      top: 60px;
       left: 10px;
-      z-index: 100;
       display: flex;
       gap: 10px;
+      z-index: 100;
     }
+
     .menu button {
       padding: 10px;
       background-color: #444;
@@ -31,12 +34,31 @@
       font-size: 16px;
       cursor: pointer;
     }
+
     .menu button:hover {
       background-color: #888;
+    }
+
+    .logo {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      z-index: 200;
+      background-color: white;
+      padding: 5px;
+    }
+
+    .logo img {
+      width: 50px;
     }
   </style>
 </head>
 <body>
+  <!-- Logo del restaurante -->
+  <div class="logo">
+    <img src="./logo.png" alt="Restaurant Logo">
+  </div>
+
   <!-- Menú de categorías -->
   <div class="menu">
     <button id="entradas">Entradas</button>
@@ -44,52 +66,16 @@
     <button id="bebidas">Bebidas</button>
   </div>
 
-  <!-- Escena A-Frame con AR.js -->
-  <a-scene embedded arjs="sourceType: webcam; sourceWidth: 1280; sourceHeight: 720; displayWidth: 1280; displayHeight: 720;">
-    <!-- Marcador Hiro para activar el modelo 3D -->
-    <a-marker preset="hiro">
-      <!-- Contenedor para el modelo 3D -->
-      <a-entity id="modelContainer"></a-entity>
-    </a-marker>
+  <!-- Escena A-Frame -->
+  <a-scene embedded>
+    <!-- Aquí se cargará el modelo 3D seleccionado -->
+    <a-entity id="modelContainer" position="0 1 -3"></a-entity>
 
-    <!-- Cámara para la realidad aumentada -->
-    <a-entity camera></a-entity>
+    <!-- Cámara para ver el modelo -->
+    <a-entity camera position="0 1.6 0"></a-entity>
   </a-scene>
 
-  <script>
-    // Referencias a los botones y al contenedor del modelo
-    const entradasBtn = document.getElementById('entradas');
-    const platosFondoBtn = document.getElementById('platosFondo');
-    const bebidasBtn = document.getElementById('bebidas');
-    const modelContainer = document.getElementById('modelContainer');
-
-    // Función para cargar un modelo 3D en formato GLB
-    function cargarModelo(rutaModelo) {
-      // Elimina cualquier modelo anterior
-      while (modelContainer.firstChild) {
-        modelContainer.removeChild(modelContainer.firstChild);
-      }
-
-      // Crea el nuevo modelo 3D
-      const modelo = document.createElement('a-entity');
-      modelo.setAttribute('gltf-model', rutaModelo);
-      modelo.setAttribute('scale', '0.5 0.5 0.5');
-      modelo.setAttribute('position', '0 0 0');
-      modelContainer.appendChild(modelo);
-    }
-
-    // Escucha de eventos para los botones
-    entradasBtn.addEventListener('click', () => {
-      cargarModelo('./models/entradas/Pepsi_Can.glb');
-    });
-
-    platosFondoBtn.addEventListener('click', () => {
-      cargarModelo('./models/platos_fondo/Pepsi_Can.glb');
-    });
-
-    bebidasBtn.addEventListener('click', () => {
-      cargarModelo('./models/bebidas/Pepsi_Can.glb');
-    });
-  </script>
+  <!-- Script para manejar la lógica de las categorías y los modelos 3D -->
+  <script src="./main.js"></script>
 </body>
 </html>
