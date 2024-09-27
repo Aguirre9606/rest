@@ -10,14 +10,20 @@
   <!-- Logo -->
   <img id="logo" src="logo.png" alt="Logo Restaurante">
 
-  <!-- Contenedor de los botones -->
+  <!-- Contenedor de botones -->
   <div id="buttons-container">
     <button id="entradas-btn">Entradas</button>
     <button id="platos-btn">Platos de Fondo</button>
     <button id="bebidas-btn">Bebidas</button>
   </div>
 
-  <!-- Aquí va el resto de tu código AR.js y A-Frame -->
+  <!-- Escena AR con A-Frame y AR.js -->
+  <a-scene embedded arjs>
+    <a-marker preset="hiro">
+      <a-entity id="3d-object" gltf-model="url(models/Pepsi_Can.glb)" scale="0.1 0.1 0.1" position="0 0 0"></a-entity>
+    </a-marker>
+    <a-entity camera></a-entity>
+  </a-scene>
 
   <script src="main.js"></script>
 </body>
