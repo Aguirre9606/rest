@@ -2,29 +2,84 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Carta de Restaurante AR</title>
-  <link rel="stylesheet" href="style.css">
+  <!-- Incluyendo A-Frame y AR.js -->
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
+
+  <!-- Estilo para ajustar la cámara y evitar el zoom excesivo -->
+  <style>
+    body, html, a-scene {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+    }
+
+    .menu {
+      position: fixed;
+      top: 60px;
+      left: 10px;
+      display: flex;
+      gap: 10px;
+      z-index: 100;
+    }
+
+    .menu button {
+      padding: 10px;
+      background-color: #444;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .menu button:hover {
+      background-color: #888;
+    }
+
+    .logo {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      z-index: 200;
+      background-color: white;
+      padding: 5px;
+    }
+
+    .logo img {
+      width: 50px;
+    }
+  </style>
 </head>
 <body>
-  <!-- Logo -->
-  <img id="logo" src="logo.png" alt="Logo Restaurante">
-
-  <!-- Contenedor de botones -->
-  <div id="buttons-container">
-    <button id="entradas-btn">Entradas</button>
-    <button id="platos-btn">Platos de Fondo</button>
-    <button id="bebidas-btn">Bebidas</button>
+  <!-- Logo del restaurante -->
+  <div class="logo">
+    <img src="./logo.png" alt="Restaurant Logo">
   </div>
 
-  <!-- Escena AR con A-Frame y AR.js -->
-  <a-scene embedded arjs>
+  <!-- Menú de categorías -->
+  <div class="menu">
+    <button id="entradas">Entradas</button>
+    <button id="platosFondo">Platos de Fondo</button>
+    <button id="bebidas">Bebidas</button>
+  </div>
+
+  <!-- Escena A-Frame con AR.js -->
+  <a-scene embedded arjs="sourceType: webcam; sourceWidth: 1280; sourceHeight: 720; displayWidth: 1280; displayHeight: 720;">
+    <!-- Marcador Hiro -->
     <a-marker preset="hiro">
-      <a-entity id="3d-object" gltf-model="url(models/Pepsi_Can.glb)" scale="0.1 0.1 0.1" position="0 0 0"></a-entity>
+      <!-- Aquí se cargarán los modelos en 3D cuando se seleccionen las categorías -->
+      <a-entity id="modelContainer"></a-entity>
     </a-marker>
+
+    <!-- Cámara para realidad aumentada -->
     <a-entity camera></a-entity>
   </a-scene>
 
-  <script src="main.js"></script>
+  <!-- Script para manejar la lógica de las categorías y los modelos 3D -->
+  <script src="./main.js"></script>
 </body>
 </html>
