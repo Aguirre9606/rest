@@ -1,58 +1,51 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const entradasButton = document.getElementById("entradas");
-    const platosFondoButton = document.getElementById("platosFondo");
-    const bebidasButton = document.getElementById("bebidas");
-
-    entradasButton.addEventListener("click", function() {
-        mostrarModelos("entradas");
+document.addEventListener("DOMContentLoaded", function () {
+    // Obtener botones del menú
+    const btnEntradas = document.getElementById("entradas-btn");
+    const btnPlatosFondo = document.getElementById("platosfondo-btn");
+    const btnBebidas = document.getElementById("bebidas-btn");
+  
+    // Acción al hacer clic en "Entradas"
+    btnEntradas.addEventListener("click", function () {
+      loadModel('models/entradas/Pepsi_Can.glb');
     });
-
-    platosFondoButton.addEventListener("click", function() {
-        mostrarModelos("platos_fondo");
+  
+    // Acción al hacer clic en "Platos de Fondo"
+    btnPlatosFondo.addEventListener("click", function () {
+      loadModel('models/platos_fondo/Pepsi_Can.glb');
     });
-
-    bebidasButton.addEventListener("click", function() {
-        mostrarModelos("bebidas");
+  
+    // Acción al hacer clic en "Bebidas"
+    btnBebidas.addEventListener("click", function () {
+      loadModel('models/bebidas/Pepsi_Can.glb');
     });
-
-    function mostrarModelos(categoria) {
-        const container = document.getElementById("model-container");
-        container.innerHTML = '';  // Limpiar contenedor
-
-        let models = [];
-
-        // Cargar modelos según la categoría seleccionada
-        switch (categoria) {
-            case "entradas":
-                models = [
-                    {modelPath: 'models/entradas/model1.glb', position: '0 0 0'},
-                    {modelPath: 'models/entradas/model2.glb', position: '1 0 0'}
-                ];
-                break;
-            case "platos_fondo":
-                models = [
-                    {modelPath: 'models/platos_fondo/model1.glb', position: '0 0 0'},
-                    {modelPath: 'models/platos_fondo/model2.glb', position: '1 0 0'}
-                ];
-                break;
-            case "bebidas":
-                models = [
-                    {modelPath: 'models/bebidas/Pepsi_Can.glb', position: '0 0 0'},
-                    {modelPath: 'models/bebidas/BARREL_KEG.glb', position: '1 0 0'}
-                ];
-                break;
-        }
-
-        // Renderizar los modelos 3D seleccionados
-        models.forEach(model => {
-            const entity = document.createElement('a-entity');
-            entity.setAttribute('gltf-model', model.modelPath);
-            entity.setAttribute('position', model.position);
-            entity.setAttribute('rotation', '0 180 0');
-            entity.setAttribute('scale', '0.5 0.5 0.5');
-            container.appendChild(entity);
-        });
-
-        console.log(`${categoria} seleccionadas`);
+  
+    // Función para cargar modelos 3D
+    function loadModel(modelPath) {
+      const scene = document.querySelector("a-scene");
+      let existingModel = document.getElementById("dynamic-model");
+  
+      if (existingModel) {
+        existingModel.parentNode.removeChild(existingModel);
+      }
+  
+      const entity = document.createElement("a-entity");
+      entity.setAttribute("id", "dynamic-model");
+      entity.setAttribute("gltf-model", modelPath);
+      entity.setAttribute("scale", "0.5 0.5 0.5");
+      entity.setAttribute("position", "0 1 -3");
+      scene.appendChild(entity);
     }
-});
+  
+    // Inicialización de la cámara AR.js
+    navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+      .then(function (stream) {
+        let video = document.querySelector('video');
+        if (video) {
+          video.srcObject = stream;
+        }
+      })
+      .catch(function (err) {
+        console.log("Error al acceder a la cámara: " + err.name);
+      });
+  });
+  
