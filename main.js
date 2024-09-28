@@ -13,7 +13,7 @@ function cargarModelo(rutaModelo) {
   
     // Ajustar la posición y la escala del modelo
     modelEntity.setAttribute('position', '0 1 -2'); // Ajustar la distancia
-    modelEntity.setAttribute('scale', '20 20 20'); // Aumentar el tamaño del modelo a 20x
+    modelEntity.setAttribute('scale', '5 5 5'); // Escala moderada del modelo
   
     // Añadir eventos de carga y error para depurar
     modelEntity.addEventListener('model-loaded', function() {
@@ -28,4 +28,17 @@ function cargarModelo(rutaModelo) {
     // Añadir el modelo al contenedor
     modelContainer.appendChild(modelEntity);
   }
+  
+  // Manejo de los botones
+  document.getElementById('entradas').addEventListener('click', function() {
+    cargarModelo('./models/entradas/Pepsi_Can.glb');
+  });
+  
+  document.getElementById('platosFondo').addEventListener('click', function() {
+    cargarModelo('./models/platos_fondo/Pepsi_Can.glb');
+  });
+  
+  document.getElementById('bebidas').addEventListener('click', function() {
+    cargarModelo('./models/bebidas/Pepsi_Can.glb');
+  });
   
