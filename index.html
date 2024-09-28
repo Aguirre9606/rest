@@ -56,8 +56,6 @@
     /* Botones para cambiar de modelo 3D */
     .nav-btn {
       position: fixed;
-      top: 50%;
-      transform: translateY(-50%);
       z-index: 200;
       background-color: #444;
       color: white;
@@ -69,10 +67,12 @@
 
     .nav-left {
       left: 10px;
+      top: 35%; /* Subido un poco más arriba en el eje Y */
     }
 
     .nav-right {
       right: 10px;
+      top: 35%; /* Aseguramos que esté centrado en el eje Y */
     }
 
     .nav-btn:hover {
@@ -90,12 +90,12 @@
 
       .nav-left {
         left: 10px;
-        top: 50%;
+        top: 35%; /* Ajuste en móviles */
       }
 
       .nav-right {
         right: 10px;
-        top: 50%;
+        top: 35%; /* Ajuste en móviles */
       }
 
       .menu button {
