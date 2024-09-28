@@ -26,6 +26,16 @@ document.getElementById('entradas').addEventListener('click', function () {
     modelEntity.setAttribute('position', '0 0 -5'); // Ajustar la posición según sea necesario
     modelEntity.setAttribute('scale', '0.5 0.5 0.5'); // Ajustar el tamaño según sea necesario
   
+    // Añadir eventos de carga y error para depurar
+    modelEntity.addEventListener('model-loaded', function() {
+      console.log('Modelo 3D cargado correctamente.');
+    });
+  
+    modelEntity.addEventListener('model-error', function() {
+      console.error('Error al cargar el modelo 3D.');
+      alert('Error al cargar el modelo. Por favor, revisa la ruta y el formato del archivo.');
+    });
+  
     // Añadir el modelo al contenedor
     modelContainer.appendChild(modelEntity);
   }
