@@ -23,7 +23,7 @@
       left: 10px;
       display: flex;
       gap: 10px;
-      z-index: 1000; /* Asegura que los botones del menú estén por encima de la escena AR */
+      z-index: 100;
     }
 
     .menu button {
@@ -44,7 +44,7 @@
       position: fixed;
       top: 10px;
       left: 10px;
-      z-index: 1000; /* Asegura que el logo esté por encima de la escena AR */
+      z-index: 200;
       background-color: white;
       padding: 5px;
     }
@@ -58,7 +58,7 @@
       position: fixed;
       top: 50%;
       transform: translateY(-50%);
-      z-index: 1000;
+      z-index: 200;
       background-color: #444;
       color: white;
       border: none;
@@ -68,11 +68,11 @@
     }
 
     .nav-left {
-      left: 10px;
+      left: 20px;
     }
 
     .nav-right {
-      right: 10px;
+      right: 20px;
     }
 
     .nav-btn:hover {
@@ -83,6 +83,14 @@
       .nav-btn {
         font-size: 20px;
         padding: 15px;
+      }
+
+      .nav-left {
+        left: 10px;
+      }
+
+      .nav-right {
+        right: 10px;
       }
 
       .menu button {
@@ -107,8 +115,8 @@
   </div>
 
   <!-- Botones de navegación para cambiar de modelo 3D -->
-  <button class="nav-btn nav-left" id="prevModel">⟨</button>
-  <button class="nav-btn nav-right" id="nextModel">⟩
+  <button class="nav-btn nav-left" id="prevModel" style="display: none;">⟨</button>
+  <button class="nav-btn nav-right" id="nextModel" style="display: none;">⟩</button>
 
   <!-- Escena A-Frame con AR.js -->
   <a-scene embedded arjs="sourceType: webcam; sourceWidth: 1280; sourceHeight: 720; displayWidth: 1280; displayHeight: 720;">
@@ -118,8 +126,12 @@
     <!-- Luz direccional para añadir más iluminación desde un ángulo -->
     <a-light type="directional" position="-1 1 2" intensity="1.2"></a-light>
 
+    <!-- Luz puntual para iluminar directamente el objeto -->
+    <a-light type="point" intensity="2" position="0 3 0"></a-light>
+    <a-light type="point" intensity="2" position="0 -3 2"></a-light>
+
     <!-- Aquí se cargarán los modelos en 3D cuando se seleccionen las categorías -->
-    <a-entity id="modelContainer" position="0 -0.4 -2"></a-entity>
+    <a-entity id="modelContainer" position="0 0 0"></a-entity>
 
     <!-- Cámara para realidad aumentada -->
     <a-entity camera></a-entity>
@@ -133,6 +145,7 @@
       './models/platos_fondo/Pepsi_Can.glb'  // Modelo 3
     ];
     let currentModelIndex = 0;
+    let modeloCargado = false;
 
     // Función para cargar un modelo 3D en el contenedor
     function cargarModelo(rutaModelo) {
@@ -161,6 +174,11 @@
 
       // Añadir el modelo al contenedor
       modelContainer.appendChild(modelEntity);
+      modeloCargado = true;
+
+      // Mostrar los botones de navegación cuando un modelo se ha cargado
+      document.getElementById('prevModel').style.display = 'block';
+      document.getElementById('nextModel').style.display = 'block';
     }
 
     // Lógica para cargar los modelos 3D según la categoría seleccionada
@@ -178,13 +196,17 @@
 
     // Funcionalidad para cambiar de modelo con los botones de navegación
     document.getElementById('prevModel').addEventListener('click', function () {
-      currentModelIndex = (currentModelIndex === 0) ? models.length - 1 : currentModelIndex - 1;
-      cargarModelo(models[currentModelIndex]);
+      if (modeloCargado) {
+        currentModelIndex = (currentModelIndex === 0) ? models.length - 1 : currentModelIndex - 1;
+        cargarModelo(models[currentModelIndex]);
+      }
     });
 
     document.getElementById('nextModel').addEventListener('click', function () {
-      currentModelIndex = (currentModelIndex === models.length - 1) ? 0 : currentModelIndex + 1;
-      cargarModelo(models[currentModelIndex]);
+      if (modeloCargado) {
+        currentModelIndex = (currentModelIndex === models.length - 1) ? 0 : currentModelIndex + 1;
+        cargarModelo(models[currentModelIndex]);
+      }
     });
   </script>
 </body>
