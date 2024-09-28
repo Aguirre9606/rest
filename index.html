@@ -23,7 +23,7 @@
       left: 10px;
       display: flex;
       gap: 10px;
-      z-index: 1000; /* Asegura que los botones del menú están por encima de la escena AR */
+      z-index: 1000; /* Asegura que los botones del menú estén por encima de la escena AR */
     }
 
     .menu button {
@@ -58,22 +58,21 @@
       position: fixed;
       top: 50%;
       transform: translateY(-50%);
-      z-index: 1000; /* Asegura que los botones de navegación estén por encima de la escena AR */
+      z-index: 1000;
       background-color: #444;
       color: white;
       border: none;
       padding: 10px;
       cursor: pointer;
       border-radius: 5px;
-      display: none; /* Los botones estarán ocultos inicialmente */
     }
 
     .nav-left {
-      left: 20px;
+      left: 10px;
     }
 
     .nav-right {
-      right: 20px;
+      right: 10px;
     }
 
     .nav-btn:hover {
@@ -84,15 +83,6 @@
       .nav-btn {
         font-size: 20px;
         padding: 15px;
-        top: 60%; /* Ajustar la altura para pantallas móviles */
-      }
-
-      .nav-left {
-        left: 5px; /* Ajuste más cerca del borde izquierdo */
-      }
-
-      .nav-right {
-        right: 5px; /* Ajuste más cerca del borde derecho */
       }
 
       .menu button {
@@ -129,7 +119,7 @@
     <a-light type="directional" position="-1 1 2" intensity="1.2"></a-light>
 
     <!-- Aquí se cargarán los modelos en 3D cuando se seleccionen las categorías -->
-    <a-entity id="modelContainer" position="0 0 -2"></a-entity>
+    <a-entity id="modelContainer" position="0 -0.4 -2"></a-entity>
 
     <!-- Cámara para realidad aumentada -->
     <a-entity camera></a-entity>
@@ -143,7 +133,6 @@
       './models/platos_fondo/Pepsi_Can.glb'  // Modelo 3
     ];
     let currentModelIndex = 0;
-    let modeloCargado = false;
 
     // Función para cargar un modelo 3D en el contenedor
     function cargarModelo(rutaModelo) {
@@ -172,12 +161,6 @@
 
       // Añadir el modelo al contenedor
       modelContainer.appendChild(modelEntity);
-      modeloCargado = true;
-
-      // Mostrar los botones de navegación cuando se carga un modelo
-      document.querySelectorAll('.nav-btn').forEach(button => {
-        button.style.display = 'block';
-      });
     }
 
     // Lógica para cargar los modelos 3D según la categoría seleccionada
@@ -195,17 +178,13 @@
 
     // Funcionalidad para cambiar de modelo con los botones de navegación
     document.getElementById('prevModel').addEventListener('click', function () {
-      if (modeloCargado) {
-        currentModelIndex = (currentModelIndex === 0) ? models.length - 1 : currentModelIndex - 1;
-        cargarModelo(models[currentModelIndex]);
-      }
+      currentModelIndex = (currentModelIndex === 0) ? models.length - 1 : currentModelIndex - 1;
+      cargarModelo(models[currentModelIndex]);
     });
 
     document.getElementById('nextModel').addEventListener('click', function () {
-      if (modeloCargado) {
-        currentModelIndex = (currentModelIndex === models.length - 1) ? 0 : currentModelIndex + 1;
-        cargarModelo(models[currentModelIndex]);
-      }
+      currentModelIndex = (currentModelIndex === models.length - 1) ? 0 : currentModelIndex + 1;
+      cargarModelo(models[currentModelIndex]);
     });
   </script>
 </body>
