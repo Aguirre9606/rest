@@ -13,7 +13,7 @@ function cargarModelo(rutaModelo) {
   
     // Ajustar la posición y la escala del modelo
     modelEntity.setAttribute('position', '0 1 -2'); // Ajustar la distancia
-    modelEntity.setAttribute('scale', '5 5 5'); // Aumentar aún más el tamaño del modelo
+    modelEntity.setAttribute('scale', '20 20 20'); // Aumentar el tamaño del modelo a 20x
   
     // Añadir eventos de carga y error para depurar
     modelEntity.addEventListener('model-loaded', function() {
