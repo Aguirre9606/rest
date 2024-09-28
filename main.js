@@ -23,7 +23,7 @@ document.getElementById('entradas').addEventListener('click', function () {
     // Crear la entidad de A-Frame para el nuevo modelo
     const modelEntity = document.createElement('a-entity');
     modelEntity.setAttribute('gltf-model', rutaModelo);
-    modelEntity.setAttribute('position', '0 -1 -7'); // Subir un poco en el eje Y
+    modelEntity.setAttribute('position', '0 -2 -8'); // Subir un poco en el eje Y
     modelEntity.setAttribute('scale', '5 5 5'); // Mantener el tamaño grande
   
     // Añadir eventos de carga y error para depurar
