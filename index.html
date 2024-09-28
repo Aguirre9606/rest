@@ -70,10 +70,13 @@
   <!-- Escena A-Frame con AR.js -->
   <a-scene embedded arjs="sourceType: webcam; sourceWidth: 1280; sourceHeight: 720; displayWidth: 1280; displayHeight: 720;">
     <!-- Luz ambiental para iluminar toda la escena -->
-    <a-light type="ambient" color="#FFFFFF" intensity="0.7"></a-light>
+    <a-light type="ambient" color="#FFFFFF" intensity="0.8"></a-light>
 
-    <!-- Luz direccional para añadir más iluminación en un ángulo -->
-    <a-light type="directional" position="1 1 0" intensity="0.5"></a-light>
+    <!-- Luz direccional para añadir más iluminación desde un ángulo -->
+    <a-light type="directional" position="-1 1 2" intensity="0.6"></a-light>
+
+    <!-- Luz puntual para enfocarse en el objeto desde arriba -->
+    <a-light type="point" intensity="1.2" position="0 3 0"></a-light>
 
     <!-- Aquí se cargarán los modelos en 3D cuando se seleccionen las categorías -->
     <a-entity id="modelContainer" position="0 0 0"></a-entity>
