@@ -23,8 +23,8 @@ document.getElementById('entradas').addEventListener('click', function () {
     // Crear la entidad de A-Frame para el nuevo modelo
     const modelEntity = document.createElement('a-entity');
     modelEntity.setAttribute('gltf-model', rutaModelo);
-    modelEntity.setAttribute('position', '0 1 -3'); // Ajustar la posición para centrar el modelo
-    modelEntity.setAttribute('scale', '2 2 2'); // Aumentar el tamaño del modelo para que sea más grande
+    modelEntity.setAttribute('position', '0 0 -5'); // Ajustar la posición según sea necesario
+    modelEntity.setAttribute('scale', '5 5 5'); // Aumentar el tamaño (ahora es 5 veces más grande)
   
     // Añadir eventos de carga y error para depurar
     modelEntity.addEventListener('model-loaded', function() {
@@ -39,4 +39,3 @@ document.getElementById('entradas').addEventListener('click', function () {
     // Añadir el modelo al contenedor
     modelContainer.appendChild(modelEntity);
   }
-  
