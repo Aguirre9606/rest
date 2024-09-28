@@ -116,8 +116,8 @@
   </div>
 
   <!-- Botones de navegación para cambiar de modelo 3D -->
-  <button class="nav-btn nav-left" id="prevModel" style="display: none;">⟨</button>
-  <button class="nav-btn nav-right" id="nextModel" style="display: none;">⟩</button>
+  <button class="nav-btn nav-left" id="prevModel">⟨</button>
+  <button class="nav-btn nav-right" id="nextModel">⟩</button>
 
   <!-- Escena A-Frame con AR.js -->
   <a-scene embedded arjs="sourceType: webcam; sourceWidth: 1280; sourceHeight: 720; displayWidth: 1280; displayHeight: 720;">
@@ -176,10 +176,6 @@
       // Añadir el modelo al contenedor
       modelContainer.appendChild(modelEntity);
       modeloCargado = true;
-
-      // Mostrar los botones de navegación cuando un modelo se ha cargado
-      document.getElementById('prevModel').style.display = 'block';
-      document.getElementById('nextModel').style.display = 'block';
     }
 
     // Lógica para cargar los modelos 3D según la categoría seleccionada
