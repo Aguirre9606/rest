@@ -12,8 +12,8 @@ function cargarModelo(rutaModelo) {
     modelEntity.setAttribute('gltf-model', rutaModelo);
   
     // Ajustar la posición y la escala del modelo
-    modelEntity.setAttribute('position', '0 1 -2'); // Aumentar la altura y ajustar la distancia
-    modelEntity.setAttribute('scale', '2 2 2'); // Aumentar el tamaño del modelo
+    modelEntity.setAttribute('position', '0 1 -2'); // Ajustar la distancia
+    modelEntity.setAttribute('scale', '5 5 5'); // Aumentar aún más el tamaño del modelo
   
     // Añadir eventos de carga y error para depurar
     modelEntity.addEventListener('model-loaded', function() {
