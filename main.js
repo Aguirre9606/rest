@@ -1,18 +1,5 @@
-// Lógica para cargar los modelos 3D según la categoría seleccionada
-document.getElementById('entradas').addEventListener('click', function () {
-    cargarModelo('./models/entradas/Pepsi_Can.glb');
-  });
-  
-  document.getElementById('platosFondo').addEventListener('click', function () {
-    cargarModelo('./models/platos_fondo/Pepsi_Can.glb');
-  });
-  
-  document.getElementById('bebidas').addEventListener('click', function () {
-    cargarModelo('./models/bebidas/Pepsi_Can.glb');
-  });
-  
-  // Función para cargar un modelo 3D en el contenedor
-  function cargarModelo(rutaModelo) {
+// Función para cargar un modelo 3D en el contenedor
+function cargarModelo(rutaModelo) {
     const modelContainer = document.getElementById('modelContainer');
     
     // Eliminar cualquier modelo anterior
@@ -23,8 +10,10 @@ document.getElementById('entradas').addEventListener('click', function () {
     // Crear la entidad de A-Frame para el nuevo modelo
     const modelEntity = document.createElement('a-entity');
     modelEntity.setAttribute('gltf-model', rutaModelo);
-    modelEntity.setAttribute('position', '0 0 -5'); // Ajustar la posición según sea necesario
-    modelEntity.setAttribute('scale', '0.5 0.5 0.5'); // Ajustar el tamaño según sea necesario
+  
+    // Ajustar la posición y la escala del modelo
+    modelEntity.setAttribute('position', '0 1 -2'); // Aumentar la altura y ajustar la distancia
+    modelEntity.setAttribute('scale', '2 2 2'); // Aumentar el tamaño del modelo
   
     // Añadir eventos de carga y error para depurar
     modelEntity.addEventListener('model-loaded', function() {
