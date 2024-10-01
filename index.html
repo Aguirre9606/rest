@@ -53,26 +53,26 @@
       width: 50px;
     }
 
-    /* Botones para cambiar de modelo 3D */
-    .nav-btn {
+    /* Contenedor de navegación con flexbox */
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       position: fixed;
-      z-index: 300; /* Asegura que los botones estén por delante del objeto 3D */
+      top: 50%;
+      width: 100%;
+      padding: 0 10px;
+      z-index: 300;
+    }
+
+    /* Botones de navegación */
+    .nav-btn {
       background-color: #444;
       color: white;
       border: none;
-      padding: 5px 10px;
+      padding: 10px;
       cursor: pointer;
       border-radius: 5px;
-    }
-
-    .nav-left {
-      left: 10px;
-      top: 50%; /* Centrado solo para pantallas grandes */
-    }
-
-    .nav-right {
-      right: 10px;
-      top: 50%; /* Centrado solo para pantallas grandes */
     }
 
     .nav-btn:hover {
@@ -83,20 +83,15 @@
     @media only screen and (max-width: 600px) {
       .nav-btn {
         font-size: 16px;
-        padding: 5px 8px;
+        padding: 10px;
+        width: 40px;
         height: 40px;
-        width: 30px;
       }
 
-      .nav-left {
-        left: 10px;
-        top: 30%; /* Ajuste extra en móviles para subir más el botón */
-      }
-
-      .nav-right {
-        right: 10px;
-        top: 30%; /* Centrarlo verticalmente y superponer en el eje Y */
-        z-index: 300; /* Asegurar que esté adelante */
+      .nav-container {
+        justify-content: space-between;
+        top: 40%;
+        padding: 0 5px;
       }
 
       .menu button {
@@ -120,9 +115,11 @@
     <button id="bebidas">Bebidas</button>
   </div>
 
-  <!-- Botones de navegación para cambiar de modelo 3D -->
-  <button class="nav-btn nav-left" id="prevModel" style="display: none;">⟨</button>
-  <button class="nav-btn nav-right" id="nextModel" style="display: none;">⟩</button>
+  <!-- Contenedor de navegación con botones flexibles -->
+  <div class="nav-container">
+    <button class="nav-btn nav-left" id="prevModel" style="display: none;">⟨</button>
+    <button class="nav-btn nav-right" id="nextModel" style="display: none;">⟩</button>
+  </div>
 
   <!-- Escena A-Frame con AR.js -->
   <a-scene embedded arjs="sourceType: webcam; sourceWidth: 1280; sourceHeight: 720; displayWidth: 1280; displayHeight: 720;">
