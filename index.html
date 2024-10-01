@@ -65,7 +65,7 @@
       border: none;
       border-radius: 5px;
       cursor: pointer;
-      z-index: 300;
+      z-index: 1000; /* Asegura que el botón siempre esté por delante */
     }
 
     .rotate-btn:hover {
@@ -82,6 +82,7 @@
       .rotate-btn {
         padding: 8px 16px;
         font-size: 14px;
+        z-index: 1000; /* Asegurar que esté al frente en móviles */
       }
     }
   </style>
@@ -99,8 +100,8 @@
     <button id="bebidas">Bebidas</button>
   </div>
 
-  <!-- Botón de rotación del objeto 3D -->
-  <button class="rotate-btn" id="rotateModel">Girar Objeto</button>
+  <!-- Botón para rotar el objeto 3D -->
+  <button class="rotate-btn" id="rotateBtn">Girar Objeto</button>
 
   <!-- Escena A-Frame con AR.js -->
   <a-scene embedded arjs="sourceType: webcam; sourceWidth: 1280; sourceHeight: 720; displayWidth: 1280; displayHeight: 720;">
@@ -115,7 +116,7 @@
     <a-light type="point" intensity="2" position="0 -3 2"></a-light>
 
     <!-- Aquí se cargarán los modelos en 3D cuando se seleccionen las categorías -->
-    <a-entity id="modelContainer" position="0 0 0" rotation="0 0 0"></a-entity>
+    <a-entity id="modelContainer" position="0 0 0"></a-entity>
 
     <!-- Cámara para realidad aumentada -->
     <a-entity camera></a-entity>
@@ -145,9 +146,8 @@
       // Crear la entidad de A-Frame para el nuevo modelo
       const modelEntity = document.createElement('a-entity');
       modelEntity.setAttribute('gltf-model', rutaModelo);
-      modelEntity.setAttribute('position', '0 -0.4 -2');
-      modelEntity.setAttribute('scale', '6 6 6');
-      modelEntity.setAttribute('rotation', '0 0 0');
+      modelEntity.setAttribute('position', '0 -0.4 -2'); // Ajustar la posición según sea necesario
+      modelEntity.setAttribute('scale', '6 6 6'); // Ajustar el tamaño según sea necesario
 
       // Añadir eventos de carga y error para depurar
       modelEntity.addEventListener('model-loaded', function() {
@@ -162,30 +162,28 @@
       // Añadir el modelo al contenedor
       modelContainer.appendChild(modelEntity);
       modeloCargado = true;
-      rotating = false;
-    }
 
-    // Función para girar el modelo 3D
-    function rotateModel() {
-      if (modeloCargado) {
-        rotating = !rotating;
+      // Lógica para rotar el modelo
+      document.getElementById('rotateBtn').addEventListener('click', function() {
         if (rotating) {
-          document.getElementById('rotateModel').innerText = 'Detener Rotación';
-          rotateContinuously();
+          rotating = false;
+          modelEntity.setAttribute('rotation', '0 0 0'); // Detener rotación
         } else {
-          document.getElementById('rotateModel').innerText = 'Girar Objeto';
+          rotating = true;
+          rotateModel(modelEntity); // Comenzar a rotar
         }
-      }
+      });
     }
 
-    // Rotación continua
-    function rotateContinuously() {
+    // Función para rotar el modelo
+    function rotateModel(entity) {
       if (rotating) {
-        const modelContainer = document.getElementById('modelContainer').firstChild;
-        const currentRotation = modelContainer.getAttribute('rotation');
-        const newRotation = (currentRotation.y + rotationSpeed) % 360;
-        modelContainer.setAttribute('rotation', `0 ${newRotation} 0`);
-        requestAnimationFrame(rotateContinuously);
+        let currentRotation = entity.getAttribute('rotation');
+        currentRotation.y += rotationSpeed; // Rotar en el eje Y
+        entity.setAttribute('rotation', currentRotation);
+
+        // Continuar rotando
+        requestAnimationFrame(() => rotateModel(entity));
       }
     }
 
@@ -201,9 +199,6 @@
     document.getElementById('bebidas').addEventListener('click', function () {
       cargarModelo('./models/bebidas/Pepsi_Can.glb');
     });
-
-    // Activar/desactivar la rotación del modelo 3D
-    document.getElementById('rotateModel').addEventListener('click', rotateModel);
   </script>
 </body>
 </html>
