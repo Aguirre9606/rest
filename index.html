@@ -56,7 +56,7 @@
     /* Estilos para el botón de rotación 3D */
     .rotate-btn {
       position: fixed;
-      bottom: 20px;
+      bottom: 40px;
       left: 50%;
       transform: translateX(-50%);
       padding: 15px 25px;
@@ -65,7 +65,8 @@
       border: none;
       border-radius: 5px;
       cursor: pointer;
-      z-index: 9999; /* Asegura que el botón siempre esté por delante */
+      z-index: 99999; /* Muy alto para estar al frente */
+      display: block;
     }
 
     .rotate-btn:hover {
@@ -82,8 +83,10 @@
       .rotate-btn {
         padding: 10px 20px;
         font-size: 14px;
-        bottom: 40px; /* Subir el botón un poco más para evitar ocultamiento */
-        z-index: 9999; /* Asegurar que esté al frente en móviles */
+        bottom: 40px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 99999; /* Muy alto para que no quede oculto */
       }
     }
   </style>
