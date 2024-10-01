@@ -60,9 +60,12 @@
       background-color: #444;
       color: white;
       border: none;
-      padding: 10px 15px;
+      padding: 5px 10px;
       cursor: pointer;
       border-radius: 5px;
+      font-size: 20px;
+      height: 40px;
+      width: 40px;
     }
 
     .nav-left {
@@ -81,27 +84,31 @@
       background-color: #888;
     }
 
-    /* Ajustes específicos para móviles */
+    /* Ajustes para móviles */
     @media only screen and (max-width: 600px) {
       .nav-btn {
         font-size: 16px;
         padding: 5px 8px;
-        height: 40px;
-        width: 30px;
+        height: 50px;
+        width: 50px;
       }
 
       .nav-left {
         left: 10px;
-        top: 50%;
-        z-index: 300;
+        top: 40%; /* Ajuste en móviles para mejorar la visibilidad */
       }
 
       .nav-right {
         right: 10px;
-        top: 50%;
-        z-index: 300;
+        top: 40%; /* Asegura que esté centrado verticalmente */
+      }
+
+      .menu button {
+        font-size: 12px;
+        padding: 8px;
       }
     }
+
   </style>
 </head>
 <body>
