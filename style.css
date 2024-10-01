@@ -6,7 +6,6 @@ body, html {
   font-family: Arial, sans-serif;
 }
 
-/* Ajuste del contenedor principal */
 a-scene {
   position: absolute;
   top: 0;
@@ -24,11 +23,11 @@ a-scene {
   left: 10px;
   width: 100px;
   height: auto;
-  z-index: 1000;
+  z-index: 1000; /* Asegura que el logo esté por encima del contenido */
 }
 
-/* Estilos para los botones */
-button {
+/* Estilos para los botones del menú */
+.menu button {
   padding: 10px;
   background-color: rgba(0, 0, 0, 0.7);
   color: white;
@@ -36,61 +35,74 @@ button {
   border-radius: 5px;
   margin: 5px;
   cursor: pointer;
-  z-index: 1000;
+  z-index: 2000; /* Asegura que los botones del menú estén por encima del contenido */
 }
 
-button:hover {
+.menu button:hover {
   background-color: rgba(50, 50, 50, 0.8);
 }
 
-/* Contenedor de los botones principales */
+/* Contenedor de los botones */
 #buttons-container {
   position: absolute;
   top: 10px;
   right: 10px;
   display: flex;
-  gap: 5px;
+  flex-direction: row;
   z-index: 1000;
 }
 
-/* Botones de navegación */
-.nav-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
+/* Botones de navegación para cambiar de modelo 3D */
+.nav-btn {
   position: fixed;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 200;
-}
-
-.nav-left, .nav-right {
+  z-index: 3000; /* Asegura que los botones de navegación estén por encima del contenido */
   background-color: #444;
   color: white;
   border: none;
   padding: 10px;
   cursor: pointer;
   border-radius: 5px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
-.nav-left:hover, .nav-right:hover {
+.nav-left {
+  left: 10px;
+  top: 50%; /* Centrado verticalmente */
+  transform: translateY(-50%);
+}
+
+.nav-right {
+  right: 10px;
+  top: 50%; /* Centrado verticalmente */
+  transform: translateY(-50%);
+}
+
+.nav-btn:hover {
   background-color: #888;
 }
 
-/* Ajustes responsivos */
+/* Ajustes para móviles */
 @media only screen and (max-width: 600px) {
-  button {
-    padding: 8px;
-    font-size: 12px;
+  .nav-btn {
+    font-size: 16px;
+    padding: 5px 8px;
+    height: 40px;
+    width: 30px;
   }
 
-  /* Ajustamos el tamaño de los botones de navegación */
-  .nav-left, .nav-right {
+  .nav-left {
+    left: 10px;
+    top: 40%; /* Ajuste en móviles para que los botones estén más centrados */
+    z-index: 3000; /* Asegura que esté siempre visible */
+  }
+
+  .nav-right {
+    right: 10px;
+    top: 40%; /* Ajuste en móviles para que los botones estén más centrados */
+    z-index: 3000; /* Asegura que esté siempre visible */
+  }
+
+  .menu button {
+    font-size: 12px;
     padding: 8px;
-    font-size: 18px;
   }
 }
