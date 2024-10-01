@@ -23,7 +23,7 @@
       left: 10px;
       display: flex;
       gap: 10px;
-      z-index: 100;
+      z-index: 1000; /* Mayor prioridad de visibilidad */
     }
 
     .menu button {
@@ -44,7 +44,7 @@
       position: fixed;
       top: 10px;
       left: 10px;
-      z-index: 200;
+      z-index: 2000;
       background-color: white;
       padding: 5px;
     }
@@ -62,7 +62,7 @@
       top: 50%;
       width: 100%;
       padding: 0 10px;
-      z-index: 300;
+      z-index: 3000; /* Mayor visibilidad */
     }
 
     /* Botones de navegación */
@@ -117,8 +117,8 @@
 
   <!-- Contenedor de navegación con botones flexibles -->
   <div class="nav-container">
-    <button class="nav-btn nav-left" id="prevModel" style="display: block;">⟨</button>
-    <button class="nav-btn nav-right" id="nextModel" style="display: block;">⟩</button>
+    <button class="nav-btn nav-left" id="prevModel">⟨</button>
+    <button class="nav-btn nav-right" id="nextModel">⟩</button>
   </div>
 
   <!-- Escena A-Frame con AR.js -->
