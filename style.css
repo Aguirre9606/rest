@@ -22,14 +22,13 @@ a-scene {
   position: absolute;
   top: 10px;
   left: 10px;
-  width: 100px; /* Cambia este valor según sea necesario */
+  width: 100px;
   height: auto;
   z-index: 1000;
 }
 
 /* Estilos para los botones */
 button {
-  position: relative;
   padding: 10px;
   background-color: rgba(0, 0, 0, 0.7);
   color: white;
@@ -44,72 +43,54 @@ button:hover {
   background-color: rgba(50, 50, 50, 0.8);
 }
 
-/* Contenedor de los botones */
+/* Contenedor de los botones principales */
 #buttons-container {
   position: absolute;
   top: 10px;
   right: 10px;
   display: flex;
-  flex-direction: row;
+  gap: 5px;
   z-index: 1000;
 }
 
-/* Ajustes responsivos */
-@media (max-width: 600px) {
-  #logo {
-    width: 80px;
-  }
-
-  button {
-    padding: 8px;
-    font-size: 14px;
-  }
-}
-
 /* Botones de navegación */
-.nav-left, .nav-right {
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
   position: fixed;
   top: 50%;
   transform: translateY(-50%);
   z-index: 200;
+}
+
+.nav-left, .nav-right {
   background-color: #444;
   color: white;
   border: none;
   padding: 10px;
   cursor: pointer;
   border-radius: 5px;
-}
-
-.nav-left {
-  left: 20px;
-}
-
-.nav-right {
-  right: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .nav-left:hover, .nav-right:hover {
   background-color: #888;
 }
 
-/* Ajustes específicos para pantallas pequeñas */
+/* Ajustes responsivos */
 @media only screen and (max-width: 600px) {
-  .nav-left {
-    left: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 300;
-  }
-
-  .nav-right {
-    right: 10px;
-    top: 50%; /* Centrando verticalmente el botón derecho */
-    transform: translateY(-50%);
-    z-index: 300;
-  }
-
-  .menu button {
-    font-size: 12px;
+  button {
     padding: 8px;
+    font-size: 12px;
+  }
+
+  /* Ajustamos el tamaño de los botones de navegación */
+  .nav-left, .nav-right {
+    padding: 8px;
+    font-size: 18px;
   }
 }
