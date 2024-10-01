@@ -53,26 +53,26 @@
       width: 50px;
     }
 
-    /* Contenedor de navegación con flexbox */
-    .nav-container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: fixed;
-      top: 50%;
-      width: 100%;
-      padding: 0 10px;
-      z-index: 300;
-    }
-
-    /* Botones de navegación */
+    /* Botones de navegación para cambiar de modelo 3D */
     .nav-btn {
+      position: fixed;
+      z-index: 300; /* Asegura que los botones estén por delante del objeto 3D */
       background-color: #444;
       color: white;
       border: none;
-      padding: 10px;
+      padding: 5px 10px;
       cursor: pointer;
       border-radius: 5px;
+    }
+
+    .nav-left {
+      left: 10px;
+      top: 50%; /* Centrado solo para pantallas grandes */
+    }
+
+    .nav-right {
+      right: 10px;
+      top: 50%; /* Centrado solo para pantallas grandes */
     }
 
     .nav-btn:hover {
@@ -83,15 +83,20 @@
     @media only screen and (max-width: 600px) {
       .nav-btn {
         font-size: 16px;
-        padding: 10px;
-        width: 40px;
+        padding: 5px 8px;
         height: 40px;
+        width: 30px;
       }
 
-      .nav-container {
-        justify-content: space-between;
-        top: 40%;
-        padding: 0 5px;
+      .nav-left {
+        left: 10px;
+        top: 30%; /* Ajuste extra en móviles para subir más el botón */
+      }
+
+      .nav-right {
+        right: 10px;
+        top: 30%; /* Centrarlo verticalmente y superponer en el eje Y */
+        z-index: 300; /* Asegurar que esté adelante */
       }
 
       .menu button {
@@ -115,11 +120,9 @@
     <button id="bebidas">Bebidas</button>
   </div>
 
-  <!-- Contenedor de navegación con botones flexibles -->
-  <div class="nav-container">
-    <button class="nav-btn nav-left" id="prevModel" style="display: block;">⟨</button>
-    <button class="nav-btn nav-right" id="nextModel" style="display: block;">⟩</button>
-  </div>
+  <!-- Botones de navegación para cambiar de modelo 3D -->
+  <button class="nav-btn nav-left" id="prevModel" style="display: none;">⟨</button>
+  <button class="nav-btn nav-right" id="nextModel" style="display: none;">⟩</button>
 
   <!-- Escena A-Frame con AR.js -->
   <a-scene embedded arjs="sourceType: webcam; sourceWidth: 1280; sourceHeight: 720; displayWidth: 1280; displayHeight: 720;">
@@ -142,17 +145,14 @@
 
   <!-- Script para manejar la lógica de las categorías y los modelos 3D -->
   <script>
-    const models = [
-      './models/entradas/Pepsi_Can.glb',  // Modelo 1
-      './models/bebidas/Pepsi_Can.glb',    // Modelo 2
-      './models/platos_fondo/Pepsi_Can.glb'  // Modelo 3
-    ];
     let currentModelIndex = 0;
-    let modeloCargado = false;
+    const models = [
+      './models/entradas/Pepsi_Can.glb',
+      './models/bebidas/Pepsi_Can.glb',
+      './models/platos_fondo/Pepsi_Can.glb'
+    ];
 
-    // Función para cargar un modelo 3D en el contenedor
-    function cargarModelo(rutaModelo) {
-      console.log('Intentando cargar modelo:', rutaModelo);  // Debug log
+    function cargarModelo(modelPath) {
       const modelContainer = document.getElementById('modelContainer');
       
       // Eliminar cualquier modelo anterior
@@ -160,53 +160,52 @@
         modelContainer.removeChild(modelContainer.firstChild);
       }
 
-      // Crear la entidad de A-Frame para el nuevo modelo
       const modelEntity = document.createElement('a-entity');
-      modelEntity.setAttribute('gltf-model', rutaModelo);
-      modelEntity.setAttribute('position', '0 -0.4 -2'); // Ajustar la posición según sea necesario
-      modelEntity.setAttribute('scale', '6 6 6'); // Ajustar el tamaño según sea necesario
-
-      // Añadir eventos de carga y error para depurar
-      modelEntity.addEventListener('model-loaded', function() {
-        console.log('Modelo 3D cargado correctamente:', rutaModelo);  // Debug log
+      modelEntity.setAttribute('gltf-model', modelPath);
+      modelEntity.setAttribute('position', '0 -0.4 -2');
+      modelEntity.setAttribute('scale', '6 6 6');
+      
+      modelEntity.addEventListener('model-loaded', () => {
+        console.log('Modelo cargado:', modelPath);
       });
-
-      modelEntity.addEventListener('model-error', function() {
-        console.error('Error al cargar el modelo 3D:', rutaModelo);  // Debug log
-        alert('Error al cargar el modelo. Revisa la ruta y el formato del archivo.');
+      
+      modelEntity.addEventListener('model-error', () => {
+        console.error('Error al cargar el modelo:', modelPath);
       });
-
-      // Añadir el modelo al contenedor
+      
       modelContainer.appendChild(modelEntity);
-      modeloCargado = true;
     }
 
-    // Lógica para cargar los modelos 3D según la categoría seleccionada
+    document.getElementById('nextModel').addEventListener('click', () => {
+      currentModelIndex = (currentModelIndex + 1) % models.length;
+      cargarModelo(models[currentModelIndex]);
+    });
+
+    document.getElementById('prevModel').addEventListener('click', () => {
+      currentModelIndex = (currentModelIndex - 1 + models.length) % models.length;
+      cargarModelo(models[currentModelIndex]);
+    });
+
+    // Cargar el primer modelo al inicio
+    cargarModelo(models[currentModelIndex]);
+
+    // Mostrar botones de navegación solo cuando se ha cargado un modelo
     document.getElementById('entradas').addEventListener('click', function () {
-      cargarModelo('./models/entradas/Pepsi_Can.glb');
+      cargarModelo(models[0]);
+      document.getElementById('prevModel').style.display = 'block';
+      document.getElementById('nextModel').style.display = 'block';
     });
-    
+
     document.getElementById('platosFondo').addEventListener('click', function () {
-      cargarModelo('./models/platos_fondo/Pepsi_Can.glb');
+      cargarModelo(models[2]);
+      document.getElementById('prevModel').style.display = 'block';
+      document.getElementById('nextModel').style.display = 'block';
     });
-    
+
     document.getElementById('bebidas').addEventListener('click', function () {
-      cargarModelo('./models/bebidas/Pepsi_Can.glb');
-    });
-
-    // Funcionalidad para cambiar de modelo con los botones de navegación
-    document.getElementById('prevModel').addEventListener('click', function () {
-      if (modeloCargado) {
-        currentModelIndex = (currentModelIndex === 0) ? models.length - 1 : currentModelIndex - 1;
-        cargarModelo(models[currentModelIndex]);
-      }
-    });
-
-    document.getElementById('nextModel').addEventListener('click', function () {
-      if (modeloCargado) {
-        currentModelIndex = (currentModelIndex === models.length - 1) ? 0 : currentModelIndex + 1;
-        cargarModelo(models[currentModelIndex]);
-      }
+      cargarModelo(models[1]);
+      document.getElementById('prevModel').style.display = 'block';
+      document.getElementById('nextModel').style.display = 'block';
     });
   </script>
 </body>
