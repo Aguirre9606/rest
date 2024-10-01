@@ -4,9 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Carta de Restaurante AR</title>
+  <!-- Incluyendo A-Frame y AR.js -->
   <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
 
+  <!-- Estilo para ajustar la cámara y evitar el zoom excesivo -->
   <style>
     body, html, a-scene {
       margin: 0;
@@ -51,6 +53,7 @@
       width: 50px;
     }
 
+    /* Contenedor de navegación con flexbox */
     .nav-container {
       display: flex;
       justify-content: space-between;
@@ -62,6 +65,7 @@
       z-index: 300;
     }
 
+    /* Botones de navegación */
     .nav-btn {
       background-color: #444;
       color: white;
@@ -69,13 +73,14 @@
       padding: 10px;
       cursor: pointer;
       border-radius: 5px;
-      display: none;
+      z-index: 400; /* Asegura que se muestren frente a otros elementos */
     }
 
     .nav-btn:hover {
       background-color: #888;
     }
 
+    /* Ajustes para móviles */
     @media only screen and (max-width: 600px) {
       .nav-btn {
         font-size: 16px;
@@ -85,6 +90,7 @@
       }
 
       .nav-container {
+        justify-content: space-between;
         top: 40%;
         padding: 0 5px;
       }
@@ -111,30 +117,31 @@
   </div>
 
   <!-- Contenedor de navegación con botones flexibles -->
-  <div class="nav-container">
+  <div class="nav-container" style="display: none;">
     <button class="nav-btn nav-left" id="prevModel">⟨</button>
     <button class="nav-btn nav-right" id="nextModel">⟩</button>
   </div>
 
   <!-- Escena A-Frame con AR.js -->
   <a-scene embedded arjs="sourceType: webcam; sourceWidth: 1280; sourceHeight: 720; displayWidth: 1280; displayHeight: 720;">
-    <!-- Luz ambiental -->
+    <!-- Luz ambiental para iluminar toda la escena -->
     <a-light type="ambient" color="#FFFFFF" intensity="1.2"></a-light>
 
-    <!-- Luz direccional -->
+    <!-- Luz direccional para añadir más iluminación desde un ángulo -->
     <a-light type="directional" position="-1 1 2" intensity="1.2"></a-light>
 
-    <!-- Luz puntual -->
+    <!-- Luz puntual para iluminar directamente el objeto -->
     <a-light type="point" intensity="2" position="0 3 0"></a-light>
     <a-light type="point" intensity="2" position="0 -3 2"></a-light>
 
-    <!-- Aquí se cargarán los modelos en 3D -->
+    <!-- Aquí se cargarán los modelos en 3D cuando se seleccionen las categorías -->
     <a-entity id="modelContainer" position="0 0 0"></a-entity>
 
     <!-- Cámara para realidad aumentada -->
     <a-entity camera></a-entity>
   </a-scene>
 
+  <!-- Script para manejar la lógica de las categorías y los modelos 3D -->
   <script>
     const models = [
       './models/entradas/Pepsi_Can.glb',  // Modelo 1
@@ -144,46 +151,53 @@
     let currentModelIndex = 0;
     let modeloCargado = false;
 
+    // Función para cargar un modelo 3D en el contenedor
     function cargarModelo(rutaModelo) {
       const modelContainer = document.getElementById('modelContainer');
-
+      
+      // Eliminar cualquier modelo anterior
       while (modelContainer.firstChild) {
         modelContainer.removeChild(modelContainer.firstChild);
       }
 
+      // Crear la entidad de A-Frame para el nuevo modelo
       const modelEntity = document.createElement('a-entity');
       modelEntity.setAttribute('gltf-model', rutaModelo);
-      modelEntity.setAttribute('position', '0 -0.4 -2');
-      modelEntity.setAttribute('scale', '6 6 6');
+      modelEntity.setAttribute('position', '0 -0.4 -2'); // Ajustar la posición según sea necesario
+      modelEntity.setAttribute('scale', '6 6 6'); // Ajustar el tamaño según sea necesario
 
+      // Añadir eventos de carga y error para depurar
       modelEntity.addEventListener('model-loaded', function() {
         console.log('Modelo 3D cargado correctamente.');
       });
 
       modelEntity.addEventListener('model-error', function() {
         console.error('Error al cargar el modelo 3D.');
-        alert('Error al cargar el modelo.');
+        alert('Error al cargar el modelo. Por favor, revisa la ruta y el formato del archivo.');
       });
 
+      // Añadir el modelo al contenedor
       modelContainer.appendChild(modelEntity);
       modeloCargado = true;
 
-      document.getElementById('prevModel').style.display = 'block';
-      document.getElementById('nextModel').style.display = 'block';
+      // Mostrar los botones de navegación cuando un modelo se ha cargado
+      document.querySelector('.nav-container').style.display = 'flex';
     }
 
+    // Lógica para cargar los modelos 3D según la categoría seleccionada
     document.getElementById('entradas').addEventListener('click', function () {
-      cargarModelo(models[0]);
+      cargarModelo('./models/entradas/Pepsi_Can.glb');
     });
-
+    
     document.getElementById('platosFondo').addEventListener('click', function () {
-      cargarModelo(models[2]);
+      cargarModelo('./models/platos_fondo/Pepsi_Can.glb');
     });
-
+    
     document.getElementById('bebidas').addEventListener('click', function () {
-      cargarModelo(models[1]);
+      cargarModelo('./models/bebidas/Pepsi_Can.glb');
     });
 
+    // Funcionalidad para cambiar de modelo con los botones de navegación
     document.getElementById('prevModel').addEventListener('click', function () {
       if (modeloCargado) {
         currentModelIndex = (currentModelIndex === 0) ? models.length - 1 : currentModelIndex - 1;
