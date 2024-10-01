@@ -59,13 +59,13 @@
       bottom: 20px;
       left: 50%;
       transform: translateX(-50%);
-      padding: 10px 20px;
+      padding: 15px 25px;
       background-color: #444;
       color: white;
       border: none;
       border-radius: 5px;
       cursor: pointer;
-      z-index: 1000; /* Asegura que el botón siempre esté por delante */
+      z-index: 9999; /* Asegura que el botón siempre esté por delante */
     }
 
     .rotate-btn:hover {
@@ -80,9 +80,9 @@
       }
 
       .rotate-btn {
-        padding: 8px 16px;
+        padding: 10px 20px;
         font-size: 14px;
-        z-index: 1000; /* Asegurar que esté al frente en móviles */
+        z-index: 9999; /* Asegurar que esté al frente en móviles */
       }
     }
   </style>
@@ -199,6 +199,7 @@
     document.getElementById('bebidas').addEventListener('click', function () {
       cargarModelo('./models/bebidas/Pepsi_Can.glb');
     });
+
   </script>
 </body>
 </html>
