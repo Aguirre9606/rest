@@ -53,61 +53,35 @@
       width: 50px;
     }
 
-    /* Botones para cambiar de modelo 3D */
-    .nav-btn {
+    /* Estilos para el botón de rotación 3D */
+    .rotate-btn {
       position: fixed;
-      z-index: 300;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 10px 20px;
       background-color: #444;
       color: white;
       border: none;
-      padding: 5px 10px;
-      cursor: pointer;
       border-radius: 5px;
-      font-size: 20px;
-      height: 40px;
-      width: 40px;
+      cursor: pointer;
+      z-index: 300;
     }
 
-    .nav-left {
-      left: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-    }
-
-    .nav-right {
-      right: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-    }
-
-    .nav-btn:hover {
+    .rotate-btn:hover {
       background-color: #888;
     }
 
     /* Ajustes para móviles */
     @media only screen and (max-width: 600px) {
-      .nav-btn {
-        font-size: 16px;
-        padding: 5px 8px;
-        height: 50px;
-        width: 50px;
-      }
-
-      .nav-left {
-        left: 10px;
-        top: 40%;
-        z-index: 300;
-      }
-
-      .nav-right {
-        right: 10px;
-        top: 40%;
-        z-index: 300;
-      }
-
       .menu button {
         font-size: 12px;
         padding: 8px;
+      }
+
+      .rotate-btn {
+        padding: 8px 16px;
+        font-size: 14px;
       }
     }
   </style>
@@ -125,9 +99,8 @@
     <button id="bebidas">Bebidas</button>
   </div>
 
-  <!-- Botones de navegación para cambiar de modelo 3D -->
-  <button class="nav-btn nav-left" id="prevModel" style="display: none;">⟨</button>
-  <button class="nav-btn nav-right" id="nextModel" style="display: none;">⟩</button>
+  <!-- Botón de rotación del objeto 3D -->
+  <button class="rotate-btn" id="rotateModel">Girar Objeto</button>
 
   <!-- Escena A-Frame con AR.js -->
   <a-scene embedded arjs="sourceType: webcam; sourceWidth: 1280; sourceHeight: 720; displayWidth: 1280; displayHeight: 720;">
@@ -142,7 +115,7 @@
     <a-light type="point" intensity="2" position="0 -3 2"></a-light>
 
     <!-- Aquí se cargarán los modelos en 3D cuando se seleccionen las categorías -->
-    <a-entity id="modelContainer" position="0 0 0"></a-entity>
+    <a-entity id="modelContainer" position="0 0 0" rotation="0 0 0"></a-entity>
 
     <!-- Cámara para realidad aumentada -->
     <a-entity camera></a-entity>
@@ -157,6 +130,8 @@
     ];
     let currentModelIndex = 0;
     let modeloCargado = false;
+    let rotating = false;
+    let rotationSpeed = 1; // Velocidad de rotación
 
     // Función para cargar un modelo 3D en el contenedor
     function cargarModelo(rutaModelo) {
@@ -170,8 +145,9 @@
       // Crear la entidad de A-Frame para el nuevo modelo
       const modelEntity = document.createElement('a-entity');
       modelEntity.setAttribute('gltf-model', rutaModelo);
-      modelEntity.setAttribute('position', '0 -0.4 -2'); // Ajustar la posición según sea necesario
-      modelEntity.setAttribute('scale', '6 6 6'); // Ajustar el tamaño según sea necesario
+      modelEntity.setAttribute('position', '0 -0.4 -2');
+      modelEntity.setAttribute('scale', '6 6 6');
+      modelEntity.setAttribute('rotation', '0 0 0');
 
       // Añadir eventos de carga y error para depurar
       modelEntity.addEventListener('model-loaded', function() {
@@ -186,10 +162,31 @@
       // Añadir el modelo al contenedor
       modelContainer.appendChild(modelEntity);
       modeloCargado = true;
+      rotating = false;
+    }
 
-      // Mostrar los botones de navegación cuando un modelo se ha cargado
-      document.getElementById('prevModel').style.display = 'block';
-      document.getElementById('nextModel').style.display = 'block';
+    // Función para girar el modelo 3D
+    function rotateModel() {
+      if (modeloCargado) {
+        rotating = !rotating;
+        if (rotating) {
+          document.getElementById('rotateModel').innerText = 'Detener Rotación';
+          rotateContinuously();
+        } else {
+          document.getElementById('rotateModel').innerText = 'Girar Objeto';
+        }
+      }
+    }
+
+    // Rotación continua
+    function rotateContinuously() {
+      if (rotating) {
+        const modelContainer = document.getElementById('modelContainer').firstChild;
+        const currentRotation = modelContainer.getAttribute('rotation');
+        const newRotation = (currentRotation.y + rotationSpeed) % 360;
+        modelContainer.setAttribute('rotation', `0 ${newRotation} 0`);
+        requestAnimationFrame(rotateContinuously);
+      }
     }
 
     // Lógica para cargar los modelos 3D según la categoría seleccionada
@@ -205,20 +202,8 @@
       cargarModelo('./models/bebidas/Pepsi_Can.glb');
     });
 
-    // Funcionalidad para cambiar de modelo con los botones de navegación
-    document.getElementById('prevModel').addEventListener('click', function () {
-      if (modeloCargado) {
-        currentModelIndex = (currentModelIndex === 0) ? models.length - 1 : currentModelIndex - 1;
-        cargarModelo(models[currentModelIndex]);
-      }
-    });
-
-    document.getElementById('nextModel').addEventListener('click', function () {
-      if (modeloCargado) {
-        currentModelIndex = (currentModelIndex === models.length - 1) ? 0 : currentModelIndex + 1;
-        cargarModelo(models[currentModelIndex]);
-      }
-    });
+    // Activar/desactivar la rotación del modelo 3D
+    document.getElementById('rotateModel').addEventListener('click', rotateModel);
   </script>
 </body>
 </html>
