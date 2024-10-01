@@ -23,7 +23,7 @@
       left: 10px;
       display: flex;
       gap: 10px;
-      z-index: 1000; /* Asegura que el menú esté por delante */
+      z-index: 100;
     }
 
     .menu button {
@@ -44,7 +44,7 @@
       position: fixed;
       top: 10px;
       left: 10px;
-      z-index: 1000;
+      z-index: 200;
       background-color: white;
       padding: 5px;
     }
@@ -56,7 +56,7 @@
     /* Botones para cambiar de modelo 3D */
     .nav-btn {
       position: fixed;
-      z-index: 1000; /* Asegura que los botones estén por delante del objeto 3D */
+      z-index: 300; /* Asegura que los botones estén por delante del objeto 3D */
       background-color: #444;
       color: white;
       border: none;
@@ -67,14 +67,12 @@
 
     .nav-left {
       left: 10px;
-      top: 50%;
-      transform: translateY(-50%);
+      top: 50%; /* Centrado solo para pantallas grandes */
     }
 
     .nav-right {
       right: 10px;
-      top: 50%;
-      transform: translateY(-50%);
+      top: 50%; /* Centrado solo para pantallas grandes */
     }
 
     .nav-btn:hover {
@@ -92,14 +90,13 @@
 
       .nav-left {
         left: 10px;
-        top: 50%; /* Ajuste para centrar en móviles */
-        z-index: 1000;
+        top: 40%; /* Ajuste extra en móviles para subir más el botón */
       }
 
       .nav-right {
         right: 10px;
-        top: 50%; /* Ajuste para centrar en móviles */
-        z-index: 1000;
+        top: 40%; /* Ajuste para móviles */
+        z-index: 300; /* Asegurar que esté adelante */
       }
 
       .menu button {
@@ -107,7 +104,6 @@
         padding: 8px;
       }
     }
-
   </style>
 </head>
 <body>
