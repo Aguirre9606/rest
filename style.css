@@ -88,4 +88,58 @@ body, html {
       padding: 8px;
     }
   }
-    
+.nav-left {
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 200;
+}
+
+.nav-right {
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 200;
+}
+
+@media only screen and (max-width: 600px) {
+  .nav-left {
+    left: 10px;
+    top: 50%; /* Ajustar si es necesario */
+    z-index: 300;
+  }
+
+  .nav-right {
+    right: 10px;
+    top: 50%; /* Ajustar si es necesario */
+    z-index: 300;
+  }
+}
+.nav-left {
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 200;
+}
+
+.nav-right {
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 200;
+}
+
+@media only screen and (max-width: 600px) {
+  .nav-left {
+    left: 10px;
+    top: 50%; /* Ajustar si es necesario */
+    z-index: 300;
+  }
+
+  .nav-right {
+    right: 10px;
+    top: 50%; /* Ajustar si es necesario */
+    z-index: 300;
+  }
+}
+  
