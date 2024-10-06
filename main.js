@@ -1,78 +1,73 @@
-const categories = {
+const models = {
     entradas: [
-      './models/entradas/1.objeto.glb',
-      './models/entradas/2.objeto.glb'
-    ],
-    bebidas: [
-      './models/bebidas/1.objeto.glb',
-      './models/bebidas/2.objeto.glb'
+      './models/entradas/1.BARREL_KEG.glb',
+      './models/entradas/2.Pepsi_Can.glb'
     ],
     platosFondo: [
-      './models/platos_fondo/1.objeto.glb',
-      './models/platos_fondo/2.objeto.glb'
+      './models/platos_fondo/1.uploads_files_2465920_burger_merged.glb',
+      './models/platos_fondo/2.Pepsi_Can.glb'
+    ],
+    bebidas: [
+      './models/bebidas/1.Pepsi_Can.glb',
+      './models/bebidas/2.BARREL_KEG.glb'
     ]
   };
   
-  let currentCategory = null;
   let currentModelIndex = 0;
+  let modeloCargado = false;
+  let currentCategory = 'entradas'; 
   
   function cargarModelo(rutaModelo) {
     const modelContainer = document.getElementById('modelContainer');
-    
-    // Limpiar cualquier modelo previo
     while (modelContainer.firstChild) {
       modelContainer.removeChild(modelContainer.firstChild);
     }
-  
-    // Crear una nueva entidad para cargar el modelo
     const modelEntity = document.createElement('a-entity');
     modelEntity.setAttribute('gltf-model', rutaModelo);
     modelEntity.setAttribute('position', '0 -0.4 -2');
     modelEntity.setAttribute('scale', '6 6 6');
-  
     modelEntity.addEventListener('model-loaded', function() {
       console.log('Modelo 3D cargado correctamente.');
-      document.getElementById('prevModel').style.display = 'block';
-      document.getElementById('nextModel').style.display = 'block';
     });
-  
     modelEntity.addEventListener('model-error', function() {
       console.error('Error al cargar el modelo 3D.');
-      alert('Error al cargar el modelo. Revisa la ruta y el formato del archivo.');
+      alert('Error al cargar el modelo. Por favor, revisa la ruta y el formato del archivo.');
     });
-  
     modelContainer.appendChild(modelEntity);
+    modeloCargado = true;
+    document.getElementById('prevModel').style.display = 'block';
+    document.getElementById('nextModel').style.display = 'block';
   }
   
   document.getElementById('entradas').addEventListener('click', function () {
-    currentCategory = categories.entradas;
+    currentCategory = 'entradas';
     currentModelIndex = 0;
-    cargarModelo(currentCategory[currentModelIndex]);
+    cargarModelo(models[currentCategory][currentModelIndex]);
   });
   
   document.getElementById('platosFondo').addEventListener('click', function () {
-    currentCategory = categories.platosFondo;
+    currentCategory = 'platosFondo';
     currentModelIndex = 0;
-    cargarModelo(currentCategory[currentModelIndex]);
+    cargarModelo(models[currentCategory][currentModelIndex]);
   });
   
   document.getElementById('bebidas').addEventListener('click', function () {
-    currentCategory = categories.bebidas;
+    currentCategory = 'bebidas';
     currentModelIndex = 0;
-    cargarModelo(currentCategory[currentModelIndex]);
+    cargarModelo(models[currentCategory][currentModelIndex]);
   });
   
   document.getElementById('prevModel').addEventListener('click', function () {
-    if (currentCategory) {
-      currentModelIndex = (currentModelIndex === 0) ? currentCategory.length - 1 : currentModelIndex - 1;
-      cargarModelo(currentCategory[currentModelIndex]);
+    if (modeloCargado) {
+      currentModelIndex = (currentModelIndex === 0) ? models[currentCategory].length - 1 : currentModelIndex - 1;
+      cargarModelo(models[currentCategory][currentModelIndex]);
     }
   });
   
   document.getElementById('nextModel').addEventListener('click', function () {
-    if (currentCategory) {
-      currentModelIndex = (currentModelIndex === currentCategory.length - 1) ? 0 : currentModelIndex + 1;
-      cargarModelo(currentCategory[currentModelIndex]);
+    if (modeloCargado) {
+      currentModelIndex = (currentModelIndex === models[currentCategory].length - 1) ? 0 : currentModelIndex + 1;
+      cargarModelo(models[currentCategory][currentModelIndex]);
     }
   });
   
