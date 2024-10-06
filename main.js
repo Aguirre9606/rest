@@ -15,20 +15,21 @@ const models = {
   
   let currentModelIndex = 0;
   let currentCategory = 'entradas';
-  const uniformPosition = '0 -0.4 -2';
-  const uniformScale = '0.5 0.5 0.5';
   
+  // Función para cargar el modelo 3D con una posición y escala fijas
   function cargarModelo(rutaModelo) {
     const modelContainer = document.getElementById('modelContainer');
     
+    // Limpiar el contenedor de modelos
     while (modelContainer.firstChild) {
       modelContainer.removeChild(modelContainer.firstChild);
     }
   
+    // Crear y configurar el nuevo modelo
     const modelEntity = document.createElement('a-entity');
     modelEntity.setAttribute('gltf-model', rutaModelo);
-    modelEntity.setAttribute('position', uniformPosition);
-    modelEntity.setAttribute('scale', uniformScale);
+    modelEntity.setAttribute('position', '0 0 -2');  // Coloca el modelo en el centro
+    modelEntity.setAttribute('scale', '2 2 2');      // Escala uniforme para todos
   
     modelEntity.addEventListener('model-loaded', function() {
       console.log('Modelo 3D cargado correctamente.');
@@ -38,12 +39,14 @@ const models = {
       console.error('Error al cargar el modelo 3D.');
     });
   
+    // Añadir el modelo al contenedor
     modelContainer.appendChild(modelEntity);
     
     document.getElementById('prevModel').style.display = 'block';
     document.getElementById('nextModel').style.display = 'block';
   }
   
+  // Eventos para cambiar categorías
   document.getElementById('entradas').addEventListener('click', function () {
     currentCategory = 'entradas';
     currentModelIndex = 0;
@@ -62,6 +65,7 @@ const models = {
     cargarModelo(models[currentCategory][currentModelIndex]);
   });
   
+  // Navegar entre modelos
   document.getElementById('prevModel').addEventListener('click', function () {
     if (currentModelIndex > 0) {
       currentModelIndex--;
