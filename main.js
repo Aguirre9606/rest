@@ -27,9 +27,9 @@ const models = {
     modelEntity.setAttribute('gltf-model', rutaModelo);
     modelEntity.setAttribute('position', '0 -0.4 -2');
     modelEntity.setAttribute('scale', '6 6 6');
-  
-    // Asegurarse de que el material del modelo reaccione a la luz correctamente
-    modelEntity.setAttribute('material', 'color: #ffffff; metalness: 0.5; roughness: 0.5;');
+    
+    // Mejora de luz para mejorar la visualización
+    modelEntity.setAttribute('material', 'color: #FFF; roughness: 0.8; metalness: 0.2');
   
     modelEntity.addEventListener('model-loaded', function() {
       console.log('Modelo 3D cargado correctamente.');
