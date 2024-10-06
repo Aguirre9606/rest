@@ -1,67 +1,39 @@
 <!DOCTYPE html>
-<html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WebAR Restaurante</title>
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-    <script src="https://cdn.rawgit.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.min.js"></script>
     <script src="main.js"></script>
-    <style>
-      .menu {
-        position: absolute;
-        top: 10px;
-        left: 10px;
-        z-index: 100;
-        display: flex;
-        gap: 10px;
-      }
-      button {
-        padding: 10px;
-        font-size: 16px;
-        cursor: pointer;
-      }
-      .nav-buttons {
-        position: absolute;
-        bottom: 10px;
-        left: 10px;
-        z-index: 100;
-        display: flex;
-        gap: 10px;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="menu">
-      <button onclick="mostrarModelo('bebidas')">Bebidas</button>
-      <button onclick="mostrarModelo('entradas')">Entradas</button>
-      <button onclick="mostrarModelo('platos_fondo')">Platos de Fondo</button>
-    </div>
-    <div class="nav-buttons">
-      <button onclick="cambiarModelo(-1)">&lt; Anterior</button>
-      <button onclick="cambiarModelo(1)">Siguiente &gt;</button>
+</head>
+<body>
+    <div id="menu">
+        <button onclick="mostrarModelo('bebidas')">Bebidas</button>
+        <button onclick="mostrarModelo('entradas')">Entradas</button>
+        <button onclick="mostrarModelo('platosFondo')">Platos de Fondo</button>
     </div>
 
-    <a-scene
-      vr-mode-ui="enabled: false"
-      renderer="logarithmicDepthBuffer: true;"
-      embedded
-      arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
-    >
-      <!-- Luz -->
-      <a-light type="ambient" intensity="1"></a-light>
-      <a-light
-        type="directional"
-        position="1 1 0"
-        intensity="0.5"
-        target="#model"
-      ></a-light>
+    <div id="nav">
+        <button onclick="cambiarModelo('anterior')">&lt; Anterior</button>
+        <button onclick="cambiarModelo('siguiente')">Siguiente &gt;</button>
+    </div>
 
-      <!-- Cámara -->
-      <a-entity camera></a-entity>
+    <!-- Escena de A-Frame -->
+    <a-scene embedded>
+        <a-assets>
+            <a-asset-item id="modelo1" src="./models/bebidas/1.Pepsi_Can.glb"></a-asset-item>
+            <a-asset-item id="modelo2" src="./models/entradas/1.BARREL_KEG.glb"></a-asset-item>
+            <a-asset-item id="modelo3" src="./models/platos_fondo/1.uploads_files_2465920_burger_merged.glb"></a-asset-item>
+        </a-assets>
 
-      <!-- Modelo 3D -->
-      <a-entity id="model" position="0 0 0" scale="0.5 0.5 0.5"></a-entity>
+        <!-- Luz ambiental -->
+        <a-light type="ambient" color="#FFFFFF"></a-light>
+
+        <!-- Luz direccional -->
+        <a-light type="directional" position="-2 4 4" intensity="0.6"></a-light>
+
+        <!-- Aquí se carga el modelo dinámicamente -->
     </a-scene>
-  </body>
+</body>
 </html>
