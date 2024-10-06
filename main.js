@@ -25,9 +25,18 @@ const models = {
   
     const modelEntity = document.createElement('a-entity');
     modelEntity.setAttribute('gltf-model', rutaModelo);
-    modelEntity.setAttribute('position', '0 -0.2 -1.5'); // Ajustar la posición del objeto
-    modelEntity.setAttribute('scale', '1 1 1'); // Ajustar el tamaño del objeto
-    modelEntity.setAttribute('rotation', '0 45 0'); // Ajustar la rotación si es necesario
+  
+    // Ajustar escala, posición y rotación dependiendo del modelo
+    if (rutaModelo.includes('BARREL_KEG')) {
+      modelEntity.setAttribute('scale', '0.5 0.5 0.5');
+      modelEntity.setAttribute('position', '0 -1 -2');
+    } else if (rutaModelo.includes('Pepsi_Can')) {
+      modelEntity.setAttribute('scale', '3 3 3');
+      modelEntity.setAttribute('position', '0 -0.4 -2');
+    } else {
+      modelEntity.setAttribute('scale', '1 1 1');
+      modelEntity.setAttribute('position', '0 0 -3');
+    }
   
     modelEntity.addEventListener('model-loaded', function() {
       console.log('Modelo 3D cargado correctamente.');
