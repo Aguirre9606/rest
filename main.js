@@ -26,10 +26,11 @@ const models = {
     const modelEntity = document.createElement('a-entity');
     modelEntity.setAttribute('gltf-model', rutaModelo);
     modelEntity.setAttribute('position', '0 -0.4 -2');
-    modelEntity.setAttribute('scale', '6 6 6');
+    modelEntity.setAttribute('scale', '1.5 1.5 1.5');  // Ajusta la escala aquí
     
-    // Mejora de luz para mejorar la visualización
-    modelEntity.setAttribute('material', 'color: #FFF; roughness: 0.8; metalness: 0.2');
+    // Atributos para mejorar la visibilidad
+    modelEntity.setAttribute('shadow', 'cast: true; receive: true');
+    modelEntity.setAttribute('material', 'color: #FFF; roughness: 0.7; metalness: 0.3');
   
     modelEntity.addEventListener('model-loaded', function() {
       console.log('Modelo 3D cargado correctamente.');
