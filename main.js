@@ -1,10 +1,20 @@
-const models = [
-    './models/entradas/Pepsi_Can.glb',
-    './models/bebidas/Pepsi_Can.glb',
-    './models/platos_fondo/uploads_files_2465920_burger_merged.glb'  // Nuevo modelo
-  ];
+const categories = {
+    entradas: [
+      './models/entradas/1.objeto.glb',
+      './models/entradas/2.objeto.glb'
+    ],
+    bebidas: [
+      './models/bebidas/1.objeto.glb',
+      './models/bebidas/2.objeto.glb'
+    ],
+    platosFondo: [
+      './models/platos_fondo/1.objeto.glb',
+      './models/platos_fondo/2.objeto.glb'
+    ]
+  };
+  
+  let currentCategory = null;
   let currentModelIndex = 0;
-  let modeloCargado = false;
   
   function cargarModelo(rutaModelo) {
     const modelContainer = document.getElementById('modelContainer');
@@ -27,35 +37,39 @@ const models = [
     });
   
     modelContainer.appendChild(modelEntity);
-    modeloCargado = true;
-  
     document.getElementById('prevModel').style.display = 'block';
     document.getElementById('nextModel').style.display = 'block';
   }
   
   document.getElementById('entradas').addEventListener('click', function () {
-    cargarModelo(models[0]);
+    currentCategory = categories.entradas;
+    currentModelIndex = 0;
+    cargarModelo(currentCategory[currentModelIndex]);
   });
   
   document.getElementById('platosFondo').addEventListener('click', function () {
-    cargarModelo(models[2]);  // Asegúrate de cargar el nuevo modelo
+    currentCategory = categories.platosFondo;
+    currentModelIndex = 0;
+    cargarModelo(currentCategory[currentModelIndex]);
   });
   
   document.getElementById('bebidas').addEventListener('click', function () {
-    cargarModelo(models[1]);
+    currentCategory = categories.bebidas;
+    currentModelIndex = 0;
+    cargarModelo(currentCategory[currentModelIndex]);
   });
   
   document.getElementById('prevModel').addEventListener('click', function () {
-    if (modeloCargado) {
-      currentModelIndex = (currentModelIndex === 0) ? models.length - 1 : currentModelIndex - 1;
-      cargarModelo(models[currentModelIndex]);
+    if (currentCategory) {
+      currentModelIndex = (currentModelIndex === 0) ? currentCategory.length - 1 : currentModelIndex - 1;
+      cargarModelo(currentCategory[currentModelIndex]);
     }
   });
   
   document.getElementById('nextModel').addEventListener('click', function () {
-    if (modeloCargado) {
-      currentModelIndex = (currentModelIndex === models.length - 1) ? 0 : currentModelIndex + 1;
-      cargarModelo(models[currentModelIndex]);
+    if (currentCategory) {
+      currentModelIndex = (currentModelIndex === currentCategory.length - 1) ? 0 : currentModelIndex + 1;
+      cargarModelo(currentCategory[currentModelIndex]);
     }
   });
   
