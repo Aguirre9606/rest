@@ -1,39 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>WebAR Restaurante</title>
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-    <script src="main.js"></script>
-</head>
-<body>
-    <div id="menu">
-        <button onclick="mostrarModelo('bebidas')">Bebidas</button>
-        <button onclick="mostrarModelo('entradas')">Entradas</button>
-        <button onclick="mostrarModelo('platosFondo')">Platos de Fondo</button>
+    <script src="https://cdn.rawgit.com/AR-js-org/AR.js/3.1.0/aframe/build/aframe-ar.min.js"></script>
+    <script src="./main.js"></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="interface">
+      <button id="bebidasBtn" onclick="mostrarModelo('bebidas')">Bebidas</button>
+      <button id="entradasBtn" onclick="mostrarModelo('entradas')">Entradas</button>
+      <button id="platosBtn" onclick="mostrarModelo('platos_fondo')">Platos de Fondo</button>
+      <button id="anteriorBtn" onclick="cambiarModelo(-1)"> &lt; Anterior </button>
+      <button id="siguienteBtn" onclick="cambiarModelo(1)"> Siguiente &gt; </button>
     </div>
 
-    <div id="nav">
-        <button onclick="cambiarModelo('anterior')">&lt; Anterior</button>
-        <button onclick="cambiarModelo('siguiente')">Siguiente &gt;</button>
-    </div>
+    <a-scene embedded arjs="sourceType: webcam;">
+      <a-assets timeout="10000">
+        <a-asset-item id="model_bebida1" src="./models/bebidas/1.Pepsi_Can.glb"></a-asset-item>
+        <a-asset-item id="model_bebida2" src="./models/bebidas/2.BARREL_KEG.glb"></a-asset-item>
+        <a-asset-item id="model_entrada1" src="./models/entradas/1.BARREL_KEG.glb"></a-asset-item>
+        <a-asset-item id="model_entrada2" src="./models/entradas/2.Pepsi_Can.glb"></a-asset-item>
+        <a-asset-item id="model_plato1" src="./models/platos_fondo/1.uploads_files_2465920_burger_merged.glb"></a-asset-item>
+        <a-asset-item id="model_plato2" src="./models/platos_fondo/2.Pepsi_Can.glb"></a-asset-item>
+      </a-assets>
 
-    <!-- Escena de A-Frame -->
-    <a-scene embedded>
-        <a-assets>
-            <a-asset-item id="modelo1" src="./models/bebidas/1.Pepsi_Can.glb"></a-asset-item>
-            <a-asset-item id="modelo2" src="./models/entradas/1.BARREL_KEG.glb"></a-asset-item>
-            <a-asset-item id="modelo3" src="./models/platos_fondo/1.uploads_files_2465920_burger_merged.glb"></a-asset-item>
-        </a-assets>
+      <a-entity id="modelo-3d" position="0 1 -5" scale="1 1 1" rotation="0 180 0"></a-entity>
 
-        <!-- Luz ambiental -->
-        <a-light type="ambient" color="#FFFFFF"></a-light>
-
-        <!-- Luz direccional -->
-        <a-light type="directional" position="-2 4 4" intensity="0.6"></a-light>
-
-        <!-- Aquí se carga el modelo dinámicamente -->
+      <a-camera></a-camera>
     </a-scene>
-</body>
+  </body>
 </html>
