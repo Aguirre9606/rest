@@ -16,7 +16,7 @@ const models = {
   let currentModelIndex = 0;
   let currentCategory = 'entradas';
   
-  // Función para cargar el modelo 3D con una posición y escala fijas
+  // Función para cargar el modelo 3D con una posición y escala automáticas
   function cargarModelo(rutaModelo) {
     const modelContainer = document.getElementById('modelContainer');
     
@@ -29,13 +29,21 @@ const models = {
     const modelEntity = document.createElement('a-entity');
     modelEntity.setAttribute('gltf-model', rutaModelo);
     modelEntity.setAttribute('position', '0 0 -2');  // Coloca el modelo en el centro
-    modelEntity.setAttribute('scale', '2 2 2');      // Escala uniforme para todos
   
-    modelEntity.addEventListener('model-loaded', function() {
-      console.log('Modelo 3D cargado correctamente.');
+    // Ajuste de escala automática
+    modelEntity.addEventListener('model-loaded', function (event) {
+      const bbox = new THREE.Box3().setFromObject(event.detail.model);
+      const size = bbox.getSize(new THREE.Vector3());
+      const maxDimension = Math.max(size.x, size.y, size.z);
+  
+      const desiredSize = 1; // Ajusta este valor para el tamaño final deseado
+      const scaleFactor = desiredSize / maxDimension;
+  
+      modelEntity.setAttribute('scale', `${scaleFactor} ${scaleFactor} ${scaleFactor}`);
+      console.log('Modelo 3D cargado y escalado automáticamente.');
     });
   
-    modelEntity.addEventListener('model-error', function() {
+    modelEntity.addEventListener('model-error', function () {
       console.error('Error al cargar el modelo 3D.');
     });
   
