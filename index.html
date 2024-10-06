@@ -1,121 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Carta de Restaurante AR</title>
-  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
+<a-scene embedded arjs>
+  <!-- Contenedor para los modelos 3D -->
+  <a-entity id="modelContainer"></a-entity>
+  
+  <!-- Luz ambiental y direccional para iluminar los modelos -->
+  <a-light type="ambient" intensity="1.5"></a-light>
+  <a-light type="directional" position="0 4 -4" intensity="1"></a-light>
+  
+  <!-- Cámara para la visualización AR -->
+  <a-camera-static></a-camera-static>
+</a-scene>
 
-  <style>
-    body, html, a-scene {
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-      font-family: Arial, sans-serif;
-    }
+<!-- Botones de categorías -->
+<div>
+  <button onclick="mostrarModelo('bebidas')">Bebidas</button>
+  <button onclick="mostrarModelo('entradas')">Entradas</button>
+  <button onclick="mostrarModelo('platos_fondo')">Platos de Fondo</button>
+</div>
 
-    .menu {
-      position: fixed;
-      top: 60px;
-      left: 10px;
-      display: flex;
-      gap: 10px;
-      z-index: 100;
-    }
-
-    .menu button {
-      padding: 10px;
-      background-color: #444;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    .menu button:hover {
-      background-color: #888;
-    }
-
-    .logo {
-      position: fixed;
-      top: 10px;
-      left: 10px;
-      z-index: 200;
-      background-color: white;
-      padding: 5px;
-    }
-
-    .logo img {
-      width: 50px;
-    }
-
-    .nav-btn {
-      position: fixed;
-      z-index: 300;
-      background-color: #444;
-      color: white;
-      border: none;
-      padding: 5px 10px;
-      cursor: pointer;
-      border-radius: 5px;
-    }
-
-    .nav-left {
-      left: 10px;
-      top: 50%;
-    }
-
-    .nav-right {
-      right: 10px;
-      top: 50%;
-    }
-
-    .nav-btn:hover {
-      background-color: #888;
-    }
-
-    @media only screen and (max-width: 600px) {
-      .nav-btn {
-        font-size: 16px;
-        padding: 5px 8px;
-        height: 40px;
-        width: 30px;
-      }
-
-      .menu button {
-        font-size: 12px;
-        padding: 8px;
-      }
-    }
-  </style>
-</head>
-<body>
-  <div class="logo">
-    <img src="./logo.png" alt="Restaurant Logo">
-  </div>
-
-  <div class="menu">
-    <button id="entradas">Entradas</button>
-    <button id="platosFondo">Platos de Fondo</button>
-    <button id="bebidas">Bebidas</button>
-  </div>
-
-  <button class="nav-btn nav-left" id="prevModel" style="display: none;">⟨</button>
-  <button class="nav-btn nav-right" id="nextModel" style="display: none;">⟩</button>
-
-  <a-scene embedded arjs="sourceType: webcam; sourceWidth: 1280; sourceHeight: 720; displayWidth: 1280; displayHeight: 720;">
-    <a-light type="ambient" color="#FFFFFF" intensity="1.2"></a-light>
-    <a-light type="directional" position="-1 1 2" intensity="1.2"></a-light>
-    <a-light type="point" intensity="2" position="0 3 0"></a-light>
-    <a-light type="point" intensity="2" position="0 -3 2"></a-light>
-
-    <a-entity id="modelContainer" position="0 0 0"></a-entity>
-
-    <a-entity camera></a-entity>
-  </a-scene>
-
-  <script src="./main.js"></script>
-</body>
-</html>
+<!-- Botones de navegación para cambiar entre los modelos de una categoría -->
+<div>
+  <button onclick="cambiarModelo('anterior')">&lt; Anterior</button>
+  <button onclick="cambiarModelo('siguiente')">Siguiente &gt;</button>
+</div>
