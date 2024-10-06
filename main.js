@@ -4,7 +4,7 @@ const models = {
       './models/entradas/2.Pepsi_Can.glb'
     ],
     platosFondo: [
-      './models/platos_fondo/1uploads_files_2465920_burger_merged.glb',
+      './models/platos_fondo/1.uploads_files_2465920_burger_merged.glb',
       './models/platos_fondo/2.Pepsi_Can.glb'
     ],
     bebidas: [
@@ -54,10 +54,9 @@ const models = {
   });
   
   document.getElementById('platosFondo').addEventListener('click', function () {
-    currentCategory = 'platosFondo';
-    currentModelIndex = 0;
-    cargarModelo(models[currentCategory][currentModelIndex]);
-  });
+    cargarModelo('./models/platos_fondo/1.uploads_files_2465920_burger_merged.glb');
+});
+
   
   document.getElementById('bebidas').addEventListener('click', function () {
     currentCategory = 'bebidas';
