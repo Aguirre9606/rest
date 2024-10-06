@@ -1,37 +1,67 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WebAR Restaurante</title>
-  <script src="main.js"></script> <!-- Asegúrate de que este archivo apunte a tu archivo JavaScript correctamente -->
-</head>
-<body>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WebAR Restaurante</title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.rawgit.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.min.js"></script>
+    <script src="main.js"></script>
+    <style>
+      .menu {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        z-index: 100;
+        display: flex;
+        gap: 10px;
+      }
+      button {
+        padding: 10px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+      .nav-buttons {
+        position: absolute;
+        bottom: 10px;
+        left: 10px;
+        z-index: 100;
+        display: flex;
+        gap: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="menu">
+      <button onclick="mostrarModelo('bebidas')">Bebidas</button>
+      <button onclick="mostrarModelo('entradas')">Entradas</button>
+      <button onclick="mostrarModelo('platos_fondo')">Platos de Fondo</button>
+    </div>
+    <div class="nav-buttons">
+      <button onclick="cambiarModelo(-1)">&lt; Anterior</button>
+      <button onclick="cambiarModelo(1)">Siguiente &gt;</button>
+    </div>
 
-<a-scene embedded arjs>
-  <!-- Contenedor para los modelos 3D -->
-  <a-entity id="modelContainer"></a-entity>
-  
-  <!-- Luz ambiental y direccional para iluminar los modelos -->
-  <a-light type="ambient" intensity="1.5"></a-light>
-  <a-light type="directional" position="0 4 -4" intensity="1"></a-light>
-  
-  <!-- Cámara para la visualización AR -->
-  <a-camera-static></a-camera-static>
-</a-scene>
+    <a-scene
+      vr-mode-ui="enabled: false"
+      renderer="logarithmicDepthBuffer: true;"
+      embedded
+      arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
+    >
+      <!-- Luz -->
+      <a-light type="ambient" intensity="1"></a-light>
+      <a-light
+        type="directional"
+        position="1 1 0"
+        intensity="0.5"
+        target="#model"
+      ></a-light>
 
-<!-- Botones de categorías -->
-<div>
-  <button onclick="mostrarModelo('bebidas')">Bebidas</button>
-  <button onclick="mostrarModelo('entradas')">Entradas</button>
-  <button onclick="mostrarModelo('platos_fondo')">Platos de Fondo</button>
-</div>
+      <!-- Cámara -->
+      <a-entity camera></a-entity>
 
-<!-- Botones de navegación para cambiar entre los modelos de una categoría -->
-<div>
-  <button onclick="cambiarModelo('anterior')">&lt; Anterior</button>
-  <button onclick="cambiarModelo('siguiente')">Siguiente &gt;</button>
-</div>
-
-</body>
+      <!-- Modelo 3D -->
+      <a-entity id="model" position="0 0 0" scale="0.5 0.5 0.5"></a-entity>
+    </a-scene>
+  </body>
 </html>
