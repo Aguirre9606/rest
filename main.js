@@ -14,13 +14,12 @@ const models = {
   };
   
   let currentModelIndex = 0;
-  let currentCategory = 'bebidas'; // Categoría por defecto
-  let modeloCargado = false;
+  let currentCategory = null;
+  let modelLoaded = false;
   
   function cargarModelo(rutaModelo) {
-    console.log("Cargando modelo desde la ruta:", rutaModelo);
     const modelContainer = document.getElementById('modelContainer');
-  
+    
     // Eliminar cualquier modelo anterior
     while (modelContainer.firstChild) {
       modelContainer.removeChild(modelContainer.firstChild);
@@ -29,52 +28,53 @@ const models = {
     // Crear la entidad de A-Frame para el nuevo modelo
     const modelEntity = document.createElement('a-entity');
     modelEntity.setAttribute('gltf-model', rutaModelo);
-    modelEntity.setAttribute('position', '0 -0.4 -2');
-    modelEntity.setAttribute('scale', '6 6 6');
+    modelEntity.setAttribute('position', '0 0 -2');
+    modelEntity.setAttribute('scale', '1 1 1');
   
-    modelEntity.addEventListener('model-loaded', function() {
-      console.log('Modelo cargado correctamente:', rutaModelo);
+    modelEntity.addEventListener('model-loaded', () => {
+      console.log('Modelo 3D cargado correctamente:', rutaModelo);
+      modelLoaded = true;
     });
   
-    modelEntity.addEventListener('model-error', function() {
-      console.error('Error al cargar el modelo:', rutaModelo);
+    modelEntity.addEventListener('model-error', () => {
+      console.error('Error al cargar el modelo 3D:', rutaModelo);
+      modelLoaded = false;
     });
   
     modelContainer.appendChild(modelEntity);
-    modeloCargado = true;
-  
-    document.getElementById('prevModel').style.display = 'block';
-    document.getElementById('nextModel').style.display = 'block';
   }
   
-  document.getElementById('entradas').addEventListener('click', function () {
-    currentCategory = 'entradas';
+  function seleccionarCategoria(categoria) {
+    currentCategory = categoria;
     currentModelIndex = 0;
     cargarModelo(models[currentCategory][currentModelIndex]);
+  }
+  
+  // Event listeners para los botones de las categorías
+  document.getElementById('entradas').addEventListener('click', () => {
+    seleccionarCategoria('entradas');
   });
   
-  document.getElementById('platosFondo').addEventListener('click', function () {
-    cargarModelo('./models/platos_fondo/1.uploads_files_2465920_burger_merged.glb');
-});
-
-  
-  document.getElementById('bebidas').addEventListener('click', function () {
-    currentCategory = 'bebidas';
-    currentModelIndex = 0;
-    cargarModelo(models[currentCategory][currentModelIndex]);
+  document.getElementById('platosFondo').addEventListener('click', () => {
+    seleccionarCategoria('platosFondo');
   });
   
-  document.getElementById('prevModel').addEventListener('click', function () {
-    if (modeloCargado) {
+  document.getElementById('bebidas').addEventListener('click', () => {
+    seleccionarCategoria('bebidas');
+  });
+  
+  // Navegación entre modelos
+  document.getElementById('prevModel').addEventListener('click', () => {
+    if (modelLoaded && currentCategory) {
       currentModelIndex = (currentModelIndex === 0) ? models[currentCategory].length - 1 : currentModelIndex - 1;
       cargarModelo(models[currentCategory][currentModelIndex]);
     }
   });
   
-  document.getElementById('nextModel').addEventListener('click', function () {
-    if (modeloCargado) {
+  document.getElementById('nextModel').addEventListener('click', () => {
+    if (modelLoaded && currentCategory) {
       currentModelIndex = (currentModelIndex === models[currentCategory].length - 1) ? 0 : currentModelIndex + 1;
       cargarModelo(models[currentCategory][currentModelIndex]);
     }
   });
-   
+  
