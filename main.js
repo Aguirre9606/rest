@@ -16,27 +16,23 @@ const models = {
   let currentModelIndex = 0;
   let currentCategory = 'entradas';
   
+  // Posiciones y escala comunes para centrar y ajustar el tamaño
+  const commonPosition = '0 -0.5 -2';  // Ajusta según la cámara y el espacio
+  const commonScale = '0.5 0.5 0.5';  // Ajuste del tamaño uniforme
+  
   function cargarModelo(rutaModelo) {
     const modelContainer = document.getElementById('modelContainer');
     
+    // Limpiar el contenedor antes de cargar el nuevo modelo
     while (modelContainer.firstChild) {
       modelContainer.removeChild(modelContainer.firstChild);
     }
   
+    // Crear la entidad para el modelo
     const modelEntity = document.createElement('a-entity');
     modelEntity.setAttribute('gltf-model', rutaModelo);
-  
-    // Ajustar escala, posición y rotación dependiendo del modelo
-    if (rutaModelo.includes('BARREL_KEG')) {
-      modelEntity.setAttribute('scale', '0.5 0.5 0.5');
-      modelEntity.setAttribute('position', '0 -1 -2');
-    } else if (rutaModelo.includes('Pepsi_Can')) {
-      modelEntity.setAttribute('scale', '3 3 3');
-      modelEntity.setAttribute('position', '0 -0.4 -2');
-    } else {
-      modelEntity.setAttribute('scale', '1 1 1');
-      modelEntity.setAttribute('position', '0 0 -3');
-    }
+    modelEntity.setAttribute('position', commonPosition); // Centrar el modelo
+    modelEntity.setAttribute('scale', commonScale); // Ajustar el tamaño
   
     modelEntity.addEventListener('model-loaded', function() {
       console.log('Modelo 3D cargado correctamente.');
@@ -47,7 +43,8 @@ const models = {
     });
   
     modelContainer.appendChild(modelEntity);
-    
+  
+    // Mostrar botones de navegación si hay más de un modelo en la categoría
     document.getElementById('prevModel').style.display = 'block';
     document.getElementById('nextModel').style.display = 'block';
   }
