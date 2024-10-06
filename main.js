@@ -18,10 +18,13 @@ const categories = {
   
   function cargarModelo(rutaModelo) {
     const modelContainer = document.getElementById('modelContainer');
+    
+    // Limpiar cualquier modelo previo
     while (modelContainer.firstChild) {
       modelContainer.removeChild(modelContainer.firstChild);
     }
   
+    // Crear una nueva entidad para cargar el modelo
     const modelEntity = document.createElement('a-entity');
     modelEntity.setAttribute('gltf-model', rutaModelo);
     modelEntity.setAttribute('position', '0 -0.4 -2');
@@ -29,16 +32,16 @@ const categories = {
   
     modelEntity.addEventListener('model-loaded', function() {
       console.log('Modelo 3D cargado correctamente.');
+      document.getElementById('prevModel').style.display = 'block';
+      document.getElementById('nextModel').style.display = 'block';
     });
   
     modelEntity.addEventListener('model-error', function() {
       console.error('Error al cargar el modelo 3D.');
-      alert('Error al cargar el modelo. Por favor, revisa la ruta y el formato del archivo.');
+      alert('Error al cargar el modelo. Revisa la ruta y el formato del archivo.');
     });
   
     modelContainer.appendChild(modelEntity);
-    document.getElementById('prevModel').style.display = 'block';
-    document.getElementById('nextModel').style.display = 'block';
   }
   
   document.getElementById('entradas').addEventListener('click', function () {
