@@ -4,9 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Carta de Restaurante AR</title>
+  <!-- Incluyendo A-Frame y AR.js -->
   <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
 
+  <!-- Estilo para ajustar la cámara y evitar el zoom excesivo -->
   <style>
     body, html, a-scene {
       margin: 0;
@@ -51,9 +53,20 @@
       width: 50px;
     }
 
-    .nav-btn {
+    /* Contenedor de navegación con flexbox */
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       position: fixed;
+      top: 50%;
+      width: 100%;
+      padding: 0 10px;
       z-index: 300;
+    }
+
+    /* Botones de navegación */
+    .nav-btn {
       background-color: #444;
       color: white;
       border: none;
@@ -62,26 +75,23 @@
       border-radius: 5px;
     }
 
-    .nav-left {
-      left: 10px;
-      top: 50%;
-    }
-
-    .nav-right {
-      right: 10px;
-      top: 50%;
-    }
-
     .nav-btn:hover {
       background-color: #888;
     }
 
+    /* Ajustes para móviles */
     @media only screen and (max-width: 600px) {
       .nav-btn {
         font-size: 16px;
         padding: 10px;
         width: 40px;
         height: 40px;
+      }
+
+      .nav-container {
+        justify-content: space-between;
+        top: 40%;
+        padding: 0 5px;
       }
 
       .menu button {
@@ -93,30 +103,128 @@
   </style>
 </head>
 <body>
+  <!-- Logo del restaurante -->
   <div class="logo">
     <img src="./logo.png" alt="Restaurant Logo">
   </div>
 
+  <!-- Menú de categorías -->
   <div class="menu">
     <button id="entradas">Entradas</button>
     <button id="platosFondo">Platos de Fondo</button>
     <button id="bebidas">Bebidas</button>
   </div>
 
-  <button class="nav-btn nav-left" id="prevModel" style="display: none;">⟨</button>
-  <button class="nav-btn nav-right" id="nextModel" style="display: none;">⟩</button>
+  <!-- Contenedor de navegación con botones flexibles -->
+  <div class="nav-container">
+    <button class="nav-btn nav-left" id="prevModel" style="display: none;">⟨</button>
+    <button class="nav-btn nav-right" id="nextModel" style="display: none;">⟩</button>
+  </div>
 
+  <!-- Escena A-Frame con AR.js -->
   <a-scene embedded arjs="sourceType: webcam; sourceWidth: 1280; sourceHeight: 720; displayWidth: 1280; displayHeight: 720;">
+    <!-- Luz ambiental para iluminar toda la escena -->
     <a-light type="ambient" color="#FFFFFF" intensity="1.2"></a-light>
+
+    <!-- Luz direccional para añadir más iluminación desde un ángulo -->
     <a-light type="directional" position="-1 1 2" intensity="1.2"></a-light>
+
+    <!-- Luz puntual para iluminar directamente el objeto -->
     <a-light type="point" intensity="2" position="0 3 0"></a-light>
     <a-light type="point" intensity="2" position="0 -3 2"></a-light>
 
+    <!-- Aquí se cargarán los modelos en 3D cuando se seleccionen las categorías -->
     <a-entity id="modelContainer" position="0 0 0"></a-entity>
 
+    <!-- Cámara para realidad aumentada -->
     <a-entity camera></a-entity>
   </a-scene>
 
-  <script src="app.js"></script>
+  <!-- Script para manejar la lógica de las categorías y los modelos 3D -->
+  <script>
+    let currentModelIndex = 0;
+    let currentCategory = ''; // Guardará la categoría actual
+
+    const categories = {
+      entradas: [
+        './models/entradas/1.BARREL_KEG.glb',  
+        './models/entradas/2.Pepsi_Can.glb'
+      ],
+      platosFondo: [
+        './models/platos_fondo/1.uploads_files_2465920_burger_merged.glb',
+        './models/platos_fondo/2.Pepsi_Can.glb'
+      ],
+      bebidas: [
+        './models/bebidas/1.Pepsi_Can.glb',
+        './models/bebidas/2.BARREL_KEG.glb'
+      ]
+    };
+
+    function cargarModelo(rutaModelo) {
+      const modelContainer = document.getElementById('modelContainer');
+      
+      // Eliminar cualquier modelo anterior
+      while (modelContainer.firstChild) {
+        modelContainer.removeChild(modelContainer.firstChild);
+      }
+
+      // Crear la entidad de A-Frame para el nuevo modelo
+      const modelEntity = document.createElement('a-entity');
+      modelEntity.setAttribute('gltf-model', rutaModelo);
+      modelEntity.setAttribute('position', '0 -0.4 -2'); // Ajustar la posición según sea necesario
+      modelEntity.setAttribute('scale', '6 6 6'); // Ajustar el tamaño según sea necesario
+
+      // Añadir eventos de carga y error para depurar
+      modelEntity.addEventListener('model-loaded', function() {
+        console.log('Modelo 3D cargado correctamente.');
+      });
+
+      modelEntity.addEventListener('model-error', function() {
+        console.error('Error al cargar el modelo 3D.');
+        alert('Error al cargar el modelo. Por favor, revisa la ruta y el formato del archivo.');
+      });
+
+      // Añadir el modelo al contenedor
+      modelContainer.appendChild(modelEntity);
+
+      // Mostrar los botones de navegación cuando un modelo se ha cargado
+      document.getElementById('prevModel').style.display = 'block';
+      document.getElementById('nextModel').style.display = 'block';
+    }
+
+    // Lógica para cargar los modelos 3D según la categoría seleccionada
+    document.getElementById('entradas').addEventListener('click', function () {
+      currentCategory = 'entradas';
+      currentModelIndex = 0;
+      cargarModelo(categories[currentCategory][currentModelIndex]);
+    });
+
+    document.getElementById('platosFondo').addEventListener('click', function () {
+      currentCategory = 'platosFondo';
+      currentModelIndex = 0;
+      cargarModelo(categories[currentCategory][currentModelIndex]);
+    });
+
+    document.getElementById('bebidas').addEventListener('click', function () {
+      currentCategory = 'bebidas';
+      currentModelIndex = 0;
+      cargarModelo(categories[currentCategory][currentModelIndex]);
+    });
+
+    // Funcionalidad para cambiar de modelo con los botones de navegación
+    document.getElementById('prevModel').addEventListener('click', function () {
+      if (currentCategory) {
+        currentModelIndex = (currentModelIndex === 0) ? categories[currentCategory].length - 1 : currentModelIndex - 1;
+        cargarModelo(categories[currentCategory][currentModelIndex]);
+      }
+    });
+
+    document.getElementById('nextModel').addEventListener('click', function () {
+      if (currentCategory) {
+        currentModelIndex = (currentModelIndex === categories[currentCategory].length - 1) ? 0 : currentModelIndex + 1;
+        cargarModelo(categories[currentCategory][currentModelIndex]);
+      }
+    });
+  </script>
 </body>
 </html>
