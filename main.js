@@ -1,32 +1,22 @@
-// Lógica para cargar los modelos 3D según la categoría seleccionada
-document.getElementById('entradas').addEventListener('click', function () {
-    cargarModelo('./models/entradas/Pepsi_Can.glb');
-  });
+const models = [
+    './models/entradas/Pepsi_Can.glb',
+    './models/bebidas/Pepsi_Can.glb',
+    './models/platos_fondo/uploads_files_2465920_burger_merged.glb'  // Nuevo modelo
+  ];
+  let currentModelIndex = 0;
+  let modeloCargado = false;
   
-  document.getElementById('platosFondo').addEventListener('click', function () {
-    cargarModelo('./models/platos_fondo/Pepsi_Can.glb');
-  });
-  
-  document.getElementById('bebidas').addEventListener('click', function () {
-    cargarModelo('./models/bebidas/Pepsi_Can.glb');
-  });
-  
-  // Función para cargar un modelo 3D en el contenedor
   function cargarModelo(rutaModelo) {
     const modelContainer = document.getElementById('modelContainer');
-    
-    // Eliminar cualquier modelo anterior
     while (modelContainer.firstChild) {
       modelContainer.removeChild(modelContainer.firstChild);
     }
   
-    // Crear la entidad de A-Frame para el nuevo modelo
     const modelEntity = document.createElement('a-entity');
     modelEntity.setAttribute('gltf-model', rutaModelo);
-    modelEntity.setAttribute('position', '0 -0.4 -2'); // Subir un poco en el eje Y
-    modelEntity.setAttribute('scale', '6 6 6'); // Mantener el tamaño grande
+    modelEntity.setAttribute('position', '0 -0.4 -2');
+    modelEntity.setAttribute('scale', '6 6 6');
   
-    // Añadir eventos de carga y error para depurar
     modelEntity.addEventListener('model-loaded', function() {
       console.log('Modelo 3D cargado correctamente.');
     });
@@ -36,6 +26,36 @@ document.getElementById('entradas').addEventListener('click', function () {
       alert('Error al cargar el modelo. Por favor, revisa la ruta y el formato del archivo.');
     });
   
-    // Añadir el modelo al contenedor
     modelContainer.appendChild(modelEntity);
+    modeloCargado = true;
+  
+    document.getElementById('prevModel').style.display = 'block';
+    document.getElementById('nextModel').style.display = 'block';
   }
+  
+  document.getElementById('entradas').addEventListener('click', function () {
+    cargarModelo(models[0]);
+  });
+  
+  document.getElementById('platosFondo').addEventListener('click', function () {
+    cargarModelo(models[2]);  // Asegúrate de cargar el nuevo modelo
+  });
+  
+  document.getElementById('bebidas').addEventListener('click', function () {
+    cargarModelo(models[1]);
+  });
+  
+  document.getElementById('prevModel').addEventListener('click', function () {
+    if (modeloCargado) {
+      currentModelIndex = (currentModelIndex === 0) ? models.length - 1 : currentModelIndex - 1;
+      cargarModelo(models[currentModelIndex]);
+    }
+  });
+  
+  document.getElementById('nextModel').addEventListener('click', function () {
+    if (modeloCargado) {
+      currentModelIndex = (currentModelIndex === models.length - 1) ? 0 : currentModelIndex + 1;
+      cargarModelo(models[currentModelIndex]);
+    }
+  });
+  
