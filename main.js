@@ -16,24 +16,25 @@ const models = {
   let currentModelIndex = 0;
   let currentCategory = 'entradas';
   
-  // Posiciones y escala comunes para centrar y ajustar el tamaño
-  const commonPosition = '0 -0.5 -2';  // Ajusta según la cámara y el espacio
-  const commonScale = '0.5 0.5 0.5';  // Ajuste del tamaño uniforme
-  
+  // Función para cargar y estandarizar el tamaño y posición del modelo
   function cargarModelo(rutaModelo) {
     const modelContainer = document.getElementById('modelContainer');
     
-    // Limpiar el contenedor antes de cargar el nuevo modelo
+    // Limpiar el contenedor de modelos anteriores
     while (modelContainer.firstChild) {
       modelContainer.removeChild(modelContainer.firstChild);
     }
   
-    // Crear la entidad para el modelo
+    // Crear una nueva entidad para el modelo
     const modelEntity = document.createElement('a-entity');
     modelEntity.setAttribute('gltf-model', rutaModelo);
-    modelEntity.setAttribute('position', commonPosition); // Centrar el modelo
-    modelEntity.setAttribute('scale', commonScale); // Ajustar el tamaño
-  
+    
+    // Colocar en el centro (coordenadas estándar)
+    modelEntity.setAttribute('position', '0 0 -3');
+    
+    // Ajustar el tamaño para que todos los modelos sean del mismo tamaño
+    modelEntity.setAttribute('scale', '1 1 1'); // Ajustar según el tamaño relativo que deseas
+    
     modelEntity.addEventListener('model-loaded', function() {
       console.log('Modelo 3D cargado correctamente.');
     });
@@ -42,13 +43,15 @@ const models = {
       console.error('Error al cargar el modelo 3D.');
     });
   
+    // Añadir el modelo al contenedor
     modelContainer.appendChild(modelEntity);
-  
-    // Mostrar botones de navegación si hay más de un modelo en la categoría
+    
+    // Mostrar los botones de navegación
     document.getElementById('prevModel').style.display = 'block';
     document.getElementById('nextModel').style.display = 'block';
   }
   
+  // Event listeners para cargar modelos al hacer clic en las categorías
   document.getElementById('entradas').addEventListener('click', function () {
     currentCategory = 'entradas';
     currentModelIndex = 0;
@@ -67,6 +70,7 @@ const models = {
     cargarModelo(models[currentCategory][currentModelIndex]);
   });
   
+  // Event listeners para navegar entre modelos
   document.getElementById('prevModel').addEventListener('click', function () {
     if (currentModelIndex > 0) {
       currentModelIndex--;
