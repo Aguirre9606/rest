@@ -6,7 +6,6 @@
   <title>Carta de Restaurante AR</title>
   <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
-
   <style>
     body, html, a-scene {
       margin: 0;
@@ -51,7 +50,7 @@
       background-color: #444;
       color: white;
       border: none;
-      padding: 5px 10px;
+      padding: 10px;
       cursor: pointer;
       border-radius: 5px;
     }
@@ -69,17 +68,17 @@
     @media only screen and (max-width: 600px) {
       .nav-btn {
         font-size: 16px;
-        padding: 5px 8px;
+        padding: 10px;
+        width: 40px;
         height: 40px;
-        width: 30px;
       }
       .nav-left {
         left: 10px;
-        top: 30%;
+        top: 40%;
       }
       .nav-right {
         right: 10px;
-        top: 30%;
+        top: 40%;
       }
       .menu button {
         font-size: 12px;
@@ -99,16 +98,14 @@
   </div>
   <button class="nav-btn nav-left" id="prevModel" style="display: none;">⟨</button>
   <button class="nav-btn nav-right" id="nextModel" style="display: none;">⟩</button>
-
-  <a-scene embedded arjs="sourceType: webcam; sourceWidth: 1280; sourceHeight: 720; displayWidth: 1280; displayHeight: 720;">
-    <a-light type="ambient" color="#FFFFFF" intensity="2"></a-light>
-    <a-light type="directional" position="-1 1 2" intensity="2"></a-light>
-    <a-light type="point" intensity="3" position="0 3 0"></a-light>
-    <a-light type="point" intensity="3" position="0 -3 2"></a-light>
+  <a-scene embedded arjs="sourceType: webcam;">
+    <a-light type="ambient" color="#FFFFFF" intensity="1.2"></a-light>
+    <a-light type="directional" position="-1 1 2" intensity="1.2"></a-light>
+    <a-light type="point" intensity="2" position="0 3 0"></a-light>
+    <a-light type="point" intensity="2" position="0 -3 2"></a-light>
     <a-entity id="modelContainer" position="0 0 0"></a-entity>
     <a-entity camera></a-entity>
   </a-scene>
-
-  <script src="./script.js"></script>
+  <script src="main.js"></script>
 </body>
 </html>

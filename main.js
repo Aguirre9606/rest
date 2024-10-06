@@ -4,7 +4,7 @@ const models = {
       './models/entradas/2.Pepsi_Can.glb'
     ],
     platosFondo: [
-      './models/platos_fondo/1.uploads_files_2465920_burger_merged.glb',
+      './models/platos_fondo/1uploads_files_2465920_burger_merged.glb',
       './models/platos_fondo/2.Pepsi_Can.glb'
     ],
     bebidas: [
@@ -14,27 +14,35 @@ const models = {
   };
   
   let currentModelIndex = 0;
+  let currentCategory = 'bebidas'; // Categoría por defecto
   let modeloCargado = false;
-  let currentCategory = 'entradas'; 
   
   function cargarModelo(rutaModelo) {
+    console.log("Cargando modelo desde la ruta:", rutaModelo);
     const modelContainer = document.getElementById('modelContainer');
+  
+    // Eliminar cualquier modelo anterior
     while (modelContainer.firstChild) {
       modelContainer.removeChild(modelContainer.firstChild);
     }
+  
+    // Crear la entidad de A-Frame para el nuevo modelo
     const modelEntity = document.createElement('a-entity');
     modelEntity.setAttribute('gltf-model', rutaModelo);
     modelEntity.setAttribute('position', '0 -0.4 -2');
     modelEntity.setAttribute('scale', '6 6 6');
+  
     modelEntity.addEventListener('model-loaded', function() {
-      console.log('Modelo 3D cargado correctamente.');
+      console.log('Modelo cargado correctamente:', rutaModelo);
     });
+  
     modelEntity.addEventListener('model-error', function() {
-      console.error('Error al cargar el modelo 3D.');
-      alert('Error al cargar el modelo. Por favor, revisa la ruta y el formato del archivo.');
+      console.error('Error al cargar el modelo:', rutaModelo);
     });
+  
     modelContainer.appendChild(modelEntity);
     modeloCargado = true;
+  
     document.getElementById('prevModel').style.display = 'block';
     document.getElementById('nextModel').style.display = 'block';
   }
@@ -70,4 +78,4 @@ const models = {
       cargarModelo(models[currentCategory][currentModelIndex]);
     }
   });
-  
+   
