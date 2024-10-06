@@ -25,12 +25,19 @@ const models = {
   
     const modelEntity = document.createElement('a-entity');
     modelEntity.setAttribute('gltf-model', rutaModelo);
-    modelEntity.setAttribute('position', '0 -0.4 -2');
-    modelEntity.setAttribute('scale', '1.5 1.5 1.5');  // Ajusta la escala aquí
-    
-    // Atributos para mejorar la visibilidad
-    modelEntity.setAttribute('shadow', 'cast: true; receive: true');
-    modelEntity.setAttribute('material', 'color: #FFF; roughness: 0.7; metalness: 0.3');
+  
+    // Ajustes de escala y posición dependiendo del modelo
+    if (rutaModelo.includes('Pepsi_Can')) {
+      modelEntity.setAttribute('scale', '1 1 1');
+      modelEntity.setAttribute('position', '0 -0.5 -2');
+    } else if (rutaModelo.includes('BARREL_KEG')) {
+      modelEntity.setAttribute('scale', '2 2 2');
+      modelEntity.setAttribute('position', '0 -0.4 -3');
+    } else {
+      // Ajustes por defecto para otros modelos
+      modelEntity.setAttribute('scale', '1.5 1.5 1.5');
+      modelEntity.setAttribute('position', '0 -0.4 -2');
+    }
   
     modelEntity.addEventListener('model-loaded', function() {
       console.log('Modelo 3D cargado correctamente.');
@@ -41,7 +48,7 @@ const models = {
     });
   
     modelContainer.appendChild(modelEntity);
-    
+  
     document.getElementById('prevModel').style.display = 'block';
     document.getElementById('nextModel').style.display = 'block';
   }
