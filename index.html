@@ -106,10 +106,15 @@
   <button class="nav-btn nav-right" id="nextModel" style="display: none;">⟩</button>
 
   <a-scene embedded arjs="sourceType: webcam; sourceWidth: 1280; sourceHeight: 720; displayWidth: 1280; displayHeight: 720;">
-    <a-light type="ambient" color="#FFFFFF" intensity="1.2"></a-light>
-    <a-light type="directional" position="-1 1 2" intensity="1.2"></a-light>
-    <a-light type="point" intensity="2" position="0 3 0"></a-light>
-    <a-light type="point" intensity="2" position="0 -3 2"></a-light>
+    <!-- Incrementar la intensidad de la luz ambiental -->
+    <a-light type="ambient" color="#FFFFFF" intensity="1.5"></a-light>
+    <!-- Ajustar la luz direccional para iluminar mejor los objetos -->
+    <a-light type="directional" position="-1 2 2" intensity="1.5" color="#ffffff"></a-light>
+    <!-- Añadir una luz puntual en una posición más alta para iluminar desde arriba -->
+    <a-light type="point" intensity="2.5" position="0 5 0" color="#fff"></a-light>
+
+    <!-- Añadir luz adicional desde otra dirección para asegurar iluminación equilibrada -->
+    <a-light type="point" intensity="2" position="0 -3 2" color="#fff"></a-light>
 
     <a-entity id="modelContainer" position="0 0 0"></a-entity>
 
