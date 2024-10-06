@@ -18,6 +18,12 @@ let modelos = {
   
   function cargarModelo(ruta) {
     const entity = document.querySelector('#model');
+    
+    if (!entity) {
+      console.error('El elemento #model no está disponible.');
+      return;
+    }
+    
     entity.setAttribute('gltf-model', ruta);
     entity.setAttribute('animation-mixer', '');
     entity.setAttribute('position', '0 1 -3'); // Ajuste de posición
