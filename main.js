@@ -19,14 +19,23 @@ const models = {
   function cargarModelo(rutaModelo) {
     const modelContainer = document.getElementById('modelContainer');
     
+    // Elimina cualquier modelo previo
     while (modelContainer.firstChild) {
       modelContainer.removeChild(modelContainer.firstChild);
     }
   
     const modelEntity = document.createElement('a-entity');
+    
+    // Aplica atributos de iluminación, posición y tamaño
     modelEntity.setAttribute('gltf-model', rutaModelo);
-    modelEntity.setAttribute('position', '0 -0.4 -2');
-    modelEntity.setAttribute('scale', '6 6 6');
+    modelEntity.setAttribute('position', '0 -0.4 -2'); // Ajuste de posición
+    modelEntity.setAttribute('scale', '6 6 6'); // Ajuste de escala, igual para todos los modelos
+  
+    // Configuración de luz, replicada de Pepsi
+    const lightEntity = document.createElement('a-light');
+    lightEntity.setAttribute('type', 'ambient');
+    lightEntity.setAttribute('intensity', '1.2');
+    modelContainer.appendChild(lightEntity);
   
     modelEntity.addEventListener('model-loaded', function() {
       console.log('Modelo 3D cargado correctamente.');
@@ -38,6 +47,7 @@ const models = {
   
     modelContainer.appendChild(modelEntity);
     
+    // Muestra los botones de navegación
     document.getElementById('prevModel').style.display = 'block';
     document.getElementById('nextModel').style.display = 'block';
   }
