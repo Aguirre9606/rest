@@ -8,7 +8,84 @@
   <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
 
   <style>
-    /* Todo el estilo CSS permanece igual aquí */
+    body, html, a-scene {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+    }
+    .menu {
+      position: fixed;
+      top: 60px;
+      left: 10px;
+      display: flex;
+      gap: 10px;
+      z-index: 100;
+    }
+    .menu button {
+      padding: 10px;
+      background-color: #444;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .menu button:hover {
+      background-color: #888;
+    }
+    .logo {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      z-index: 200;
+      background-color: white;
+      padding: 5px;
+    }
+    .logo img {
+      width: 50px;
+    }
+    .nav-btn {
+      position: fixed;
+      z-index: 300;
+      background-color: #444;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    .nav-left {
+      left: 10px;
+      top: 50%;
+    }
+    .nav-right {
+      right: 10px;
+      top: 50%;
+    }
+    .nav-btn:hover {
+      background-color: #888;
+    }
+    @media only screen and (max-width: 600px) {
+      .nav-btn {
+        font-size: 16px;
+        padding: 5px 8px;
+        height: 40px;
+        width: 30px;
+      }
+      .nav-left {
+        left: 10px;
+        top: 30%;
+      }
+      .nav-right {
+        right: 10px;
+        top: 30%;
+      }
+      .menu button {
+        font-size: 12px;
+        padding: 8px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -24,14 +101,14 @@
   <button class="nav-btn nav-right" id="nextModel" style="display: none;">⟩</button>
 
   <a-scene embedded arjs="sourceType: webcam; sourceWidth: 1280; sourceHeight: 720; displayWidth: 1280; displayHeight: 720;">
-    <a-light type="ambient" color="#FFFFFF" intensity="1.2"></a-light>
-    <a-light type="directional" position="-1 1 2" intensity="1.2"></a-light>
-    <a-light type="point" intensity="2" position="0 3 0"></a-light>
-    <a-light type="point" intensity="2" position="0 -3 2"></a-light>
+    <a-light type="ambient" color="#FFFFFF" intensity="2"></a-light>
+    <a-light type="directional" position="-1 1 2" intensity="2"></a-light>
+    <a-light type="point" intensity="3" position="0 3 0"></a-light>
+    <a-light type="point" intensity="3" position="0 -3 2"></a-light>
     <a-entity id="modelContainer" position="0 0 0"></a-entity>
     <a-entity camera></a-entity>
   </a-scene>
 
-  <script src="./script.js"></script> <!-- Aquí llamas al archivo JavaScript -->
+  <script src="./script.js"></script>
 </body>
 </html>
