@@ -1,22 +1,4 @@
-const models = {
-    entradas: [
-      './models/entradas/1.BARREL_KEG.glb',
-      './models/entradas/2.Pepsi_Can.glb'
-    ],
-    platosFondo: [
-      './models/platos_fondo/1.uploads_files_2465920_burger_merged.glb',
-      './models/platos_fondo/2.Pepsi_Can.glb'
-    ],
-    bebidas: [
-      './models/bebidas/1.Pepsi_Can.glb',
-      './models/bebidas/2.BARREL_KEG.glb'
-    ]
-  };
-  
-  let currentModelIndex = 0;
-  let currentCategory = 'entradas';
-  
-  function cargarModelo(rutaModelo) {
+function cargarModelo(rutaModelo) {
     const modelContainer = document.getElementById('modelContainer');
     
     // Elimina cualquier modelo previo
@@ -28,14 +10,20 @@ const models = {
     
     // Aplica atributos de iluminación, posición y tamaño
     modelEntity.setAttribute('gltf-model', rutaModelo);
-    modelEntity.setAttribute('position', '0 -0.4 -2'); // Ajuste de posición
-    modelEntity.setAttribute('scale', '6 6 6'); // Ajuste de escala, igual para todos los modelos
+    modelEntity.setAttribute('position', '0 -1.5 -3'); // Ajuste de posición más bajo y más alejado
+    modelEntity.setAttribute('scale', '10 10 10'); // Ajuste de escala más grande para asegurar visibilidad
   
-    // Configuración de luz, replicada de Pepsi
+    // Configuración de luz, igual a la Pepsi
     const lightEntity = document.createElement('a-light');
     lightEntity.setAttribute('type', 'ambient');
-    lightEntity.setAttribute('intensity', '1.2');
+    lightEntity.setAttribute('intensity', '1.5'); // Mayor intensidad de luz para asegurar mejor visibilidad
     modelContainer.appendChild(lightEntity);
+  
+    const directionalLight = document.createElement('a-light');
+    directionalLight.setAttribute('type', 'directional');
+    directionalLight.setAttribute('intensity', '1');
+    directionalLight.setAttribute('position', '0 4 -4'); // Luz direccional para iluminar el objeto desde arriba
+    modelContainer.appendChild(directionalLight);
   
     modelEntity.addEventListener('model-loaded', function() {
       console.log('Modelo 3D cargado correctamente.');
@@ -51,36 +39,4 @@ const models = {
     document.getElementById('prevModel').style.display = 'block';
     document.getElementById('nextModel').style.display = 'block';
   }
-  
-  document.getElementById('entradas').addEventListener('click', function () {
-    currentCategory = 'entradas';
-    currentModelIndex = 0;
-    cargarModelo(models[currentCategory][currentModelIndex]);
-  });
-  
-  document.getElementById('platosFondo').addEventListener('click', function () {
-    currentCategory = 'platosFondo';
-    currentModelIndex = 0;
-    cargarModelo(models[currentCategory][currentModelIndex]);
-  });
-  
-  document.getElementById('bebidas').addEventListener('click', function () {
-    currentCategory = 'bebidas';
-    currentModelIndex = 0;
-    cargarModelo(models[currentCategory][currentModelIndex]);
-  });
-  
-  document.getElementById('prevModel').addEventListener('click', function () {
-    if (currentModelIndex > 0) {
-      currentModelIndex--;
-      cargarModelo(models[currentCategory][currentModelIndex]);
-    }
-  });
-  
-  document.getElementById('nextModel').addEventListener('click', function () {
-    if (currentModelIndex < models[currentCategory].length - 1) {
-      currentModelIndex++;
-      cargarModelo(models[currentCategory][currentModelIndex]);
-    }
-  });
   
