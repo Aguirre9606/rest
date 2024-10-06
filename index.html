@@ -8,6 +8,7 @@
   <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
 
+  <!-- Estilo para ajustar la cámara y evitar el zoom excesivo -->
   <style>
     body, html, a-scene {
       margin: 0;
@@ -52,48 +53,44 @@
       width: 50px;
     }
 
-    .nav-btn {
+    /* Contenedor de navegación */
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       position: fixed;
+      top: 50%;
+      width: 100%;
+      padding: 0 10px;
       z-index: 300;
+    }
+
+    /* Botones de navegación */
+    .nav-btn {
       background-color: #444;
       color: white;
       border: none;
-      padding: 5px 10px;
+      padding: 10px;
       cursor: pointer;
       border-radius: 5px;
-    }
-
-    .nav-left {
-      left: 10px;
-      top: 50%;
-    }
-
-    .nav-right {
-      right: 10px;
-      top: 50%;
     }
 
     .nav-btn:hover {
       background-color: #888;
     }
 
+    /* Ajustes para móviles */
     @media only screen and (max-width: 600px) {
       .nav-btn {
         font-size: 16px;
-        padding: 5px 8px;
+        padding: 10px;
+        width: 40px;
         height: 40px;
-        width: 30px;
       }
 
-      .nav-left {
-        left: 10px;
-        top: 30%;
-      }
-
-      .nav-right {
-        right: 10px;
-        top: 30%;
-        z-index: 300;
+      .nav-container {
+        top: 40%;
+        padding: 0 5px;
       }
 
       .menu button {
@@ -104,51 +101,69 @@
   </style>
 </head>
 <body>
+  <!-- Logo del restaurante -->
   <div class="logo">
     <img src="./logo.png" alt="Restaurant Logo">
   </div>
 
+  <!-- Menú de categorías -->
   <div class="menu">
     <button id="entradas">Entradas</button>
     <button id="platosFondo">Platos de Fondo</button>
     <button id="bebidas">Bebidas</button>
   </div>
 
-  <button class="nav-btn nav-left" id="prevModel" style="display: none;">⟨</button>
-  <button class="nav-btn nav-right" id="nextModel" style="display: none;">⟩</button>
+  <!-- Contenedor de navegación con botones flexibles -->
+  <div class="nav-container">
+    <button class="nav-btn nav-left" id="prevModel" style="display: block;">⟨</button>
+    <button class="nav-btn nav-right" id="nextModel" style="display: block;">⟩</button>
+  </div>
 
+  <!-- Escena A-Frame con AR.js -->
   <a-scene embedded arjs="sourceType: webcam; sourceWidth: 1280; sourceHeight: 720; displayWidth: 1280; displayHeight: 720;">
+    <!-- Luz ambiental para iluminar toda la escena -->
     <a-light type="ambient" color="#FFFFFF" intensity="1.2"></a-light>
+
+    <!-- Luz direccional para añadir más iluminación desde un ángulo -->
     <a-light type="directional" position="-1 1 2" intensity="1.2"></a-light>
+
+    <!-- Luz puntual para iluminar directamente el objeto -->
     <a-light type="point" intensity="2" position="0 3 0"></a-light>
     <a-light type="point" intensity="2" position="0 -3 2"></a-light>
+
+    <!-- Aquí se cargarán los modelos en 3D cuando se seleccionen las categorías -->
     <a-entity id="modelContainer" position="0 0 0"></a-entity>
+
+    <!-- Cámara para realidad aumentada -->
     <a-entity camera></a-entity>
   </a-scene>
 
+  <!-- Script para manejar la lógica de las categorías y los modelos 3D -->
   <script>
     const models = [
-      './models/entradas/Pepsi_Can.glb',
-      './models/bebidas/BARREL_KEG.glb',
-      './models/platos_fondo/Pepsi_Can.glb'
+      './models/entradas/Pepsi_Can.glb',  // Modelo 1
+      './models/bebidas/BARREL_KEG.glb',    // Modelo 2
+      './models/platos_fondo/Pepsi_Can.glb'  // Modelo 3
     ];
-
     let currentModelIndex = 0;
     let modeloCargado = false;
 
+    // Función para cargar un modelo 3D en el contenedor
     function cargarModelo(rutaModelo) {
       const modelContainer = document.getElementById('modelContainer');
-
+      
       // Eliminar cualquier modelo anterior
       while (modelContainer.firstChild) {
         modelContainer.removeChild(modelContainer.firstChild);
       }
 
+      // Crear la entidad de A-Frame para el nuevo modelo
       const modelEntity = document.createElement('a-entity');
       modelEntity.setAttribute('gltf-model', rutaModelo);
-      modelEntity.setAttribute('position', '0 -0.4 -2');
-      modelEntity.setAttribute('scale', '6 6 6');
+      modelEntity.setAttribute('position', '0 -0.4 -2'); // Ajustar la posición según sea necesario
+      modelEntity.setAttribute('scale', '6 6 6'); // Ajustar el tamaño según sea necesario
 
+      // Añadir eventos de carga y error para depurar
       modelEntity.addEventListener('model-loaded', function() {
         console.log('Modelo 3D cargado correctamente.');
       });
@@ -158,25 +173,25 @@
         alert('Error al cargar el modelo. Por favor, revisa la ruta y el formato del archivo.');
       });
 
+      // Añadir el modelo al contenedor
       modelContainer.appendChild(modelEntity);
       modeloCargado = true;
-
-      document.getElementById('prevModel').style.display = 'block';
-      document.getElementById('nextModel').style.display = 'block';
     }
 
+    // Lógica para cargar los modelos 3D según la categoría seleccionada
     document.getElementById('entradas').addEventListener('click', function () {
       cargarModelo('./models/entradas/Pepsi_Can.glb');
     });
-
+    
     document.getElementById('platosFondo').addEventListener('click', function () {
       cargarModelo('./models/platos_fondo/Pepsi_Can.glb');
     });
-
+    
     document.getElementById('bebidas').addEventListener('click', function () {
       cargarModelo('./models/bebidas/BARREL_KEG.glb');
     });
 
+    // Funcionalidad para cambiar de modelo con los botones de navegación
     document.getElementById('prevModel').addEventListener('click', function () {
       if (modeloCargado) {
         currentModelIndex = (currentModelIndex === 0) ? models.length - 1 : currentModelIndex - 1;
