@@ -111,9 +111,9 @@
     <a-light type="point" intensity="2" position="0 3 0"></a-light>
     <a-light type="point" intensity="2" position="0 -3 2"></a-light>
 
-    <!-- Anclaje para el modelo en el espacio AR -->
-    <a-anchor id="modelAnchor" geometry="primitive: plane; width: 1; height: 1">
-      <!-- Contenedor principal para los modelos en el centro de la escena -->
+    <!-- Utiliza un marcador para anclar el objeto 3D y mantenerlo visible -->
+    <a-marker-camera preset="hiro">
+      <!-- Contenedor principal para los modelos en el centro del marcador -->
       <a-entity id="modelContainer" position="0 0 0" scale="1 1 1">
         <!-- Modelo de Pepsi -->
         <a-entity id="modeloPepsi" gltf-model="#modeloPepsi" position="0 0 0" scale="1 1 1" visible="true"></a-entity>
@@ -124,9 +124,8 @@
         <!-- Modelo de Hamburguesa -->
         <a-entity id="modeloHamburguesa" gltf-model="#modeloHamburguesa" position="0 0 0" scale="1 1 1" visible="false"></a-entity>
       </a-entity>
-    </a-anchor>
+    </a-marker-camera>
 
-    <!-- Cámara sin look-controls para movimiento libre alrededor del objeto -->
     <a-entity camera></a-entity>
   </a-scene>
 
