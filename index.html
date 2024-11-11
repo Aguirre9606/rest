@@ -111,8 +111,8 @@
     <a-light type="point" intensity="2" position="0 3 0"></a-light>
     <a-light type="point" intensity="2" position="0 -3 2"></a-light>
 
-    <!-- Contenedor principal para los modelos -->
-    <a-entity id="modelContainer" position="0 -0.6 -1" scale="1 1 1">
+    <!-- Contenedor principal para los modelos con rotación controlada -->
+    <a-entity id="modelContainer" position="0 0 -2" scale="1 1 1">
       <!-- Modelo de Pepsi -->
       <a-entity id="modeloPepsi" gltf-model="#modeloPepsi" position="0 0 0" scale="1 1 1" visible="true"></a-entity>
 
@@ -120,10 +120,11 @@
       <a-entity id="modeloBarril" gltf-model="#modeloBarril" position="0 0 0" scale="1 1 1" visible="false"></a-entity>
 
       <!-- Modelo de Hamburguesa -->
-      <a-entity id="modeloHamburguesa" gltf-model="#modeloHamburguesa" position="0 0.6 1" scale="1 1 1" visible="false"></a-entity>
+      <a-entity id="modeloHamburguesa" gltf-model="#modeloHamburguesa" position="0 0 0" scale="1 1 1" visible="false"></a-entity>
     </a-entity>
 
-    <a-entity camera></a-entity>
+    <!-- Cámara con control de orientación -->
+    <a-entity camera look-controls></a-entity>
   </a-scene>
 
   <script src="./main.js"></script>
