@@ -6,7 +6,7 @@
   <title>Carta de Restaurante AR</title>
   <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@6.1.1/dist/aframe-extras.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-orbit-controls-component@1.3.0/dist/aframe-orbit-controls-component.min.js"></script>
 
   <style>
     body, html, a-scene {
@@ -112,11 +112,8 @@
     <a-light type="point" intensity="2" position="0 3 0"></a-light>
     <a-light type="point" intensity="2" position="0 -3 2"></a-light>
 
-    <!-- Contenedor principal para los modelos con capacidad de gestos -->
-    <a-entity id="modelContainer" position="0 -0.6 -1" scale="1 1 1" 
-              gesture-detector 
-              pinch-scale="min: 0.5; max: 2" 
-              rotation-reader>
+    <!-- Contenedor principal para los modelos con controles de órbita -->
+    <a-entity id="modelContainer" position="0 -0.6 -1" scale="1 1 1" orbit-controls="enableZoom: true; target: 0 0 0;">
       <!-- Modelo de Pepsi -->
       <a-entity id="modeloPepsi" gltf-model="#modeloPepsi" position="0 0 0" scale="1 1 1" visible="true"></a-entity>
 
