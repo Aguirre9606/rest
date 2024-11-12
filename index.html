@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -6,8 +6,7 @@
   <title>Carta de Restaurante AR</title>
   <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/supermedium/aframe-orbit-controls-component@master/dist/aframe-orbit-controls-component.min.js"></script>
 
   <style>
     body, html, a-scene {
@@ -113,29 +112,22 @@
     <a-light type="point" intensity="2" position="0 3 0"></a-light>
     <a-light type="point" intensity="2" position="0 -3 2"></a-light>
 
-    <!-- Marcador de AR.js -->
-    <a-marker type="pattern" url="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/examples/marker-training/examples/pattern-files/pattern-hiro.patt">
-      <!-- Contenedor para el modelo con controles de órbita y zoom -->
-      <a-entity id="modelContainer" scale="1 1 1">
-        <a-entity id="modelo" gltf-model="#modeloPepsi" position="0 0 0" scale="1 1 1"></a-entity>
-      </a-entity>
-    </a-marker>
+    <!-- Contenedor principal para los modelos con controles de órbita -->
+    <a-entity id="modelContainer" position="0 -0.6 -1" scale="1 1 1" orbit-controls="autoRotate: false; enableZoom: true; target: 0 0 0; enableDamping: true; dampingFactor: 0.25; rotateSpeed: 0.3; zoomSpeed: 1.2;">
+      <!-- Modelo de Pepsi -->
+      <a-entity id="modeloPepsi" gltf-model="#modeloPepsi" position="0 0 0" scale="1 1 1" visible="true"></a-entity>
+
+      <!-- Modelo de Barril -->
+      <a-entity id="modeloBarril" gltf-model="#modeloBarril" position="0 0 0" scale="1 1 1" visible="false"></a-entity>
+
+      <!-- Modelo de Hamburguesa -->
+      <a-entity id="modeloHamburguesa" gltf-model="#modeloHamburguesa" position="0 0 0" scale="1 1 1" visible="false"></a-entity>
+    </a-entity>
 
     <a-entity camera></a-entity>
   </a-scene>
 
-  <script>
-    // Espera a que el modelo se cargue y luego agrega controles
-    document.querySelector('#modelContainer').addEventListener('model-loaded', () => {
-      const sceneEl = document.querySelector('a-scene').object3D;
-      const camera = document.querySelector('a-entity[camera]').object3D;
-
-      // Agrega controles de órbita
-      const controls = new THREE.OrbitControls(camera, sceneEl);
-      controls.enableZoom = true;
-      controls.enableRotate = true;
-      controls.autoRotate = false;
-    });
-  </script>
+  <script src="./main.js"></script>
 </body>
 </html>
+
