@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -77,6 +77,25 @@
       background-color: #888;
     }
 
+    /* Botón de restablecimiento */
+    #resetModel {
+      position: fixed;
+      bottom: 20px;
+      right: 10px;
+      padding: 10px;
+      background-color: #444;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      z-index: 200;
+    }
+
+    #resetModel:hover {
+      background-color: #888;
+    }
+
     @media only screen and (max-width: 600px) {
       .nav-btn {
         font-size: 16px;
@@ -85,7 +104,13 @@
         width: 30px;
       }
 
-      .menu button {
+      .menu
+      button {
+        font-size: 12px;
+        padding: 8px;
+      }
+
+      #resetModel {
         font-size: 12px;
         padding: 8px;
       }
@@ -105,6 +130,7 @@
 
   <button class="nav-btn nav-left" id="prevModel" style="display: none;">⟨</button>
   <button class="nav-btn nav-right" id="nextModel" style="display: none;">⟩</button>
+  <button id="resetModel">Restablecer Modelo</button>
 
   <a-scene embedded arjs="sourceType: webcam; sourceWidth: 1280; sourceHeight: 720; displayWidth: 1280; displayHeight: 720;">
     <a-light type="ambient" color="#FFFFFF" intensity="1.2"></a-light>
@@ -122,15 +148,12 @@
 
       <!-- Modelo de Hamburguesa -->
       <a-entity id="modeloHamburguesa" gltf-model="#modeloHamburguesa" position="0 0 0" scale="1 1 1" visible="false"></a-entity>
-
-      <!-- Botón de restablecimiento -->
-<button id="resetModel">Restablecer modelo</button>
-
     </a-entity>
 
     <a-entity camera></a-entity>
   </a-scene>
 
+  <!-- Incluye el archivo JavaScript principal -->
   <script src="./main.js"></script>
 </body>
 </html>
