@@ -77,12 +77,18 @@
       background-color: #888; 
     } 
     
-    /* Posicionamiento del botón de restablecimiento para móviles */
-    #resetModel { 
+    /* Superponer el botón de restablecer en la capa superior */
+    #resetModelContainer { 
       position: fixed; 
       right: 10px; 
       bottom: 10px; 
-      z-index: 300; 
+      z-index: 1000; /* Superposición más alta */
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+    } 
+    
+    #resetModel { 
       background-color: #444; 
       color: white; 
       border: none; 
@@ -121,7 +127,11 @@
 
   <button class="nav-btn nav-left" id="prevModel" style="display: none;">⟨</button> 
   <button class="nav-btn nav-right" id="nextModel" style="display: none;">⟩</button> 
-  <button id="resetModel">Restablecer Modelo</button> 
+
+  <!-- Contenedor superpuesto del botón de restablecimiento -->
+  <div id="resetModelContainer"> 
+    <button id="resetModel">Restablecer Modelo</button> 
+  </div> 
 
   <a-scene embedded arjs="sourceType: webcam; sourceWidth: 1280; sourceHeight: 720; displayWidth: 1280; displayHeight: 720;"> 
     <a-light type="ambient" color="#FFFFFF" intensity="1.2"></a-light> 
@@ -131,10 +141,10 @@
 
     <!-- Contenedor principal para los modelos con controles de órbita -->
     <a-entity id="modelContainer" position="0 -0.6 -1" scale="1 1 1" orbit-controls="autoRotate: false; enableZoom: true; target: 0 0 0; enableDamping: true; dampingFactor: 0.25; rotateSpeed: 0.3; zoomSpeed: 2.5; enableKeys: false;"> 
-      <!-- Aumenté zoomSpeed para que sea más rápido -->
+      <!-- Ajustes de zoomSpeed y rotateSpeed en orbit-controls para todos los modelos -->
 
       <!-- Modelo de Pepsi --> 
-      <a-entity id="modeloPepsi" gltf-model="#modeloPepsi" position="0 0 0" scale="1 1 1" visible="true"></a-entity> 
+      <a-entity id="modeloPepsi" gltf-model="#modeloPepsi" position="0 0 0" scale="1 1 1" visible="true" orbit-controls="rotateSpeed: 1; zoomSpeed: 3;"></a-entity> 
 
       <!-- Modelo de Barril --> 
       <a-entity id="modeloBarril" gltf-model="#modeloBarril" position="0 0 0" scale="1 1 1" visible="false"></a-entity> 
