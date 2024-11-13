@@ -15,8 +15,9 @@ const models = {
 
 let currentModelIndex = 0;
 let currentCategory = 'entradas';
-let scale = 1;
-let rotationY = 0;
+let originalScale = 1;  // Escala original del modelo
+let scale = 1;           // Escala actual para zoom
+let rotationY = 0;       // Rotación en el eje Y
 let initialDistance = null;
 let isTouching = false;
 
@@ -33,20 +34,17 @@ function cargarModelo(rutaModelo) {
   modelEntity.setAttribute('gltf-model', rutaModelo);
   modelEntity.setAttribute('position', '0 0 -2');  // Coloca el modelo en el centro
   
-  // Ajuste de escala automática
+  // Ajuste de escala automática y guardado de la escala original
   modelEntity.addEventListener('model-loaded', function (event) {
     const bbox = new THREE.Box3().setFromObject(event.detail.model);
     const size = bbox.getSize(new THREE.Vector3());
     const maxDimension = Math.max(size.x, size.y, size.z);
-  
-    const desiredSize = 1; // Ajusta este valor para el tamaño final deseado
-    const scaleFactor = desiredSize / maxDimension;
-  
-    modelEntity.setAttribute('scale', `${scaleFactor} ${scaleFactor} ${scaleFactor}`);
+    const desiredSize = 1;  // Tamaño deseado para el modelo
+    originalScale = desiredSize / maxDimension;
+    scale = originalScale;  // Establecer la escala actual como la escala original
+
+    modelEntity.setAttribute('scale', `${originalScale} ${originalScale} ${originalScale}`);
     console.log('Modelo 3D cargado y escalado automáticamente.');
-    
-    // Actualiza la escala global para aplicar zoom sobre este modelo
-    scale = scaleFactor;
   });
   
   modelEntity.addEventListener('model-error', function () {
@@ -121,7 +119,6 @@ window.addEventListener('touchmove', (event) => {
     if (initialDistance) {
       const distanceChange = currentDistance - initialDistance;
       scale += distanceChange * 0.001; // Ajusta la sensibilidad del zoom
-      scale = Math.max(0.5, Math.min(2, scale)); // Limita el zoom entre 0.5x y 2x
       modelEntity.setAttribute("scale", `${scale} ${scale} ${scale}`);
     }
     initialDistance = currentDistance;
@@ -138,4 +135,18 @@ window.addEventListener('touchmove', (event) => {
 window.addEventListener('touchend', () => {
   isTouching = false;
   initialDistance = null;
+});
+
+// Restablecer el modelo a su posición y escala originales
+document.getElementById('resetModel').addEventListener('click', () => {
+  const modelContainer = document.getElementById("modelContainer");
+  const modelEntity = modelContainer.firstChild;
+
+  if (modelEntity) {
+    scale = originalScale;
+    rotationY = 0;
+    modelEntity.setAttribute("scale", `${originalScale} ${originalScale} ${originalScale}`);
+    modelEntity.setAttribute("rotation", "0 0 0");
+    console.log('Modelo restablecido a su posición y escala originales.');
+  }
 });
