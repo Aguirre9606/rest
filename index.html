@@ -15,8 +15,8 @@
       overflow: hidden;
       font-family: Arial, sans-serif;
     }
-    
-    /* Menú fijo en la parte superior */
+
+    /* Estilo del menú principal */
     .menu {
       position: fixed;
       top: 0;
@@ -30,7 +30,6 @@
       z-index: 1000; /* Superposición alta */
     }
 
-    /* Estilos para los botones */
     .menu button {
       padding: 8px 12px;
       background-color: #444;
@@ -45,7 +44,7 @@
       background-color: #888;
     }
 
-    /* Logo */
+    /* Logo del restaurante */
     .logo {
       position: fixed;
       top: 10px;
@@ -58,6 +57,32 @@
     .logo img {
       width: 50px;
     }
+
+    /* Botones de navegación */
+    .nav-button {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      padding: 10px;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      border: none;
+      font-size: 18px;
+      cursor: pointer;
+      z-index: 1000;
+    }
+
+    .nav-button:hover {
+      background-color: rgba(0, 0, 0, 0.7);
+    }
+
+    #left-button {
+      left: 10px;
+    }
+
+    #right-button {
+      right: 10px;
+    }
   </style>
 </head>
 <body>
@@ -66,21 +91,26 @@
     <img src="./logo.png" alt="Restaurant Logo">
   </div>
 
-  <!-- Menú de botones -->
+  <!-- Menú principal -->
   <div class="menu">
     <button id="entradas">Entradas</button>
     <button id="platosFondo">Platos de Fondo</button>
     <button id="bebidas">Bebidas</button>
-    <button id="resetModel">Restablecer Modelo</button> <!-- Botón agregado en el menú -->
+    <button id="resetModel">Restablecer Modelo</button> <!-- Botón de restablecimiento -->
   </div>
 
+  <!-- Botones de navegación izquierda y derecha -->
+  <button id="left-button" class="nav-button">⬅</button>
+  <button id="right-button" class="nav-button">➡</button>
+
+  <!-- Escena de A-Frame -->
   <a-scene embedded arjs="sourceType: webcam; sourceWidth: 1280; sourceHeight: 720; displayWidth: 1280; displayHeight: 720;">
     <a-light type="ambient" color="#FFFFFF" intensity="1.2"></a-light>
     <a-light type="directional" position="-1 1 2" intensity="1.2"></a-light>
     <a-light type="point" intensity="2" position="0 3 0"></a-light>
     <a-light type="point" intensity="2" position="0 -3 2"></a-light>
 
-    <!-- Contenedor principal para los modelos con controles de órbita -->
+    <!-- Contenedor de modelos 3D con controles de órbita -->
     <a-entity id="modelContainer" position="0 -0.6 -1" scale="1 1 1" orbit-controls="autoRotate: false; enableZoom: true; target: 0 0 0; enableDamping: true; dampingFactor: 0.25; rotateSpeed: 0.3; zoomSpeed: 1.5; minDistance: 0.5; maxDistance: 3;">
       <!-- Modelo de Pepsi -->
       <a-entity id="modeloPepsi" gltf-model="#modeloPepsi" position="0 0 0" scale="1 1 1" visible="true"></a-entity>
@@ -95,7 +125,39 @@
     <a-entity camera></a-entity>
   </a-scene>
 
-  <script src="./main.js"></script>
+  <script>
+    // Referencias a los elementos de los modelos
+    const modelos = ["modeloPepsi", "modeloBarril", "modeloHamburguesa"];
+    let modeloActual = 0;
+
+    // Función para mostrar el modelo actual y ocultar los demás
+    function mostrarModelo(index) {
+      modelos.forEach((id, i) => {
+        const modelo = document.getElementById(id);
+        modelo.setAttribute("visible", i === index);
+      });
+    }
+
+    // Navegación entre modelos
+    document.getElementById("left-button").addEventListener("click", () => {
+      modeloActual = (modeloActual - 1 + modelos.length) % modelos.length;
+      mostrarModelo(modeloActual);
+    });
+
+    document.getElementById("right-button").addEventListener("click", () => {
+      modeloActual = (modeloActual + 1) % modelos.length;
+      mostrarModelo(modeloActual);
+    });
+
+    // Restablecer el modelo
+    document.getElementById("resetModel").addEventListener("click", () => {
+      mostrarModelo(0); // Restablece al primer modelo (Pepsi)
+      modeloActual = 0;
+    });
+
+    // Mostrar el modelo inicial (Pepsi)
+    mostrarModelo(modeloActual);
+  </script>
 </body>
 </html>
 
