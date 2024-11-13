@@ -16,33 +16,36 @@
       font-family: Arial, sans-serif;
     }
     
-    /* Contenedor de menú para los botones */
+    /* Menú fijo en la parte superior */
     .menu {
       position: fixed;
-      top: 10px;
-      left: 10px;
+      top: 0;
+      left: 0;
+      width: 100%;
       display: flex;
+      justify-content: center;
       gap: 10px;
-      z-index: 1000; /* Alta prioridad de superposición */
-      flex-wrap: wrap; /* Permite que los botones se distribuyan si no hay espacio */
+      padding: 10px 0;
+      background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente */
+      z-index: 1000; /* Superposición alta */
     }
-    
-    /* Estilo de los botones */
+
+    /* Estilos para los botones */
     .menu button {
-      padding: 10px;
+      padding: 8px 12px;
       background-color: #444;
       color: white;
       border: none;
       border-radius: 5px;
-      font-size: 16px;
+      font-size: 14px;
       cursor: pointer;
     }
-    
+
     .menu button:hover {
       background-color: #888;
     }
-    
-    /* Estilo de logo */
+
+    /* Logo */
     .logo {
       position: fixed;
       top: 10px;
@@ -78,9 +81,9 @@
     <a-light type="point" intensity="2" position="0 -3 2"></a-light>
 
     <!-- Contenedor principal para los modelos con controles de órbita -->
-    <a-entity id="modelContainer" position="0 -0.6 -1" scale="1 1 1" orbit-controls="autoRotate: false; enableZoom: true; target: 0 0 0; enableDamping: true; dampingFactor: 0.25; rotateSpeed: 0.3; zoomSpeed: 2.5; enableKeys: false;">
+    <a-entity id="modelContainer" position="0 -0.6 -1" scale="1 1 1" orbit-controls="autoRotate: false; enableZoom: true; target: 0 0 0; enableDamping: true; dampingFactor: 0.25; rotateSpeed: 0.3; zoomSpeed: 1.5; minDistance: 0.5; maxDistance: 3;">
       <!-- Modelo de Pepsi -->
-      <a-entity id="modeloPepsi" gltf-model="#modeloPepsi" position="0 0 0" scale="1 1 1" visible="true" orbit-controls="rotateSpeed: 1; zoomSpeed: 3;"></a-entity>
+      <a-entity id="modeloPepsi" gltf-model="#modeloPepsi" position="0 0 0" scale="1 1 1" visible="true"></a-entity>
 
       <!-- Modelo de Barril -->
       <a-entity id="modeloBarril" gltf-model="#modeloBarril" position="0 0 0" scale="1 1 1" visible="false"></a-entity>
